@@ -32,8 +32,31 @@ npm install
 ```
 npm start
 ```
+app should start at `localhost:3000`
 
 3. Run tests:
 ```
 npm test
 ```
+
+# Backend
+
+1. Install PostgresSQL following [this](https://wiki.postgresql.org/wiki/Detailed_installation_guides) or any other guide.
+
+2. Create user and database:
+```
+CREATE USER blog WITH PASSWORD 'blog';
+create database blog;
+alter database blog owner to blog;
+```
+
+3. Install depndencies:
+```
+npm install
+```
+
+4. Start the backend app:
+```
+npm start
+```
+app should start at `localhost:8000`

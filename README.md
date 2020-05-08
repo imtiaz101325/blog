@@ -10,7 +10,7 @@ The application is written in JavaScript. To start working on it you need to ins
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 ```
 
-Please refer to the projects [README](https://github.com/nvm-sh/nvm#installing-and-updating) for any furthur instructions.
+Please refer to the projects [README](https://github.com/nvm-sh/nvm#installing-and-updating) for any further instructions.
 
 To check that you have Node.js installed run:
 
@@ -23,7 +23,7 @@ npm --version
 
 The front-end is built with React.js. To start the app run the following commands from the `./frontend` directory:
 
-1. Install depndencies:
+1. Install dependencies:
 ```
 npm install
 ```
@@ -50,7 +50,7 @@ create database blog;
 alter database blog owner to blog;
 ```
 
-3. Install depndencies:
+3. Install dependencies:
 ```
 npm install
 ```
@@ -60,3 +60,7 @@ npm install
 npm start
 ```
 app should start at `localhost:8000`
+
+## Notice
+
+Please make sure the Front-end is running at `localhost:3000` and the Backend is running at `localhost:8000` before continuing with development.

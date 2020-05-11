@@ -39,7 +39,7 @@ module.exports = {
         defaultValue: false,
       },
       token: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(1024),
       },
       expiresAt: {
         type: Sequelize.DATE,

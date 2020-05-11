@@ -3,10 +3,6 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../models");
 
-router.get("/", (req, res) => {
-  return res.send("Received a GET HTTP method");
-});
-
 router.post("/", async (req, res) => {
   const { firstName, lastName, username, about, email, password } = req.body;
 
@@ -44,16 +40,6 @@ router.post("/", async (req, res) => {
 
     return res.status(400).end("Could not create database entry.");
   }
-
-  return res.send("Received a POST HTTP method");
-});
-
-router.put("/", (req, res) => {
-  return res.send("Received a PUT HTTP method");
-});
-
-router.delete("/", (req, res) => {
-  return res.send("Received a DELETE HTTP method");
 });
 
 module.exports = router;

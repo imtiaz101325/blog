@@ -1,4 +1,6 @@
 "use strict";
+const crypto = require("crypto");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
@@ -33,7 +35,18 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       salt: DataTypes.STRING,
-      password: DataTypes.STRING,
+      password: {
+        type: DataTypes.STRING,
+        set(plaintext) {
+          const salt = crypto.randomBytes(16).toString("hex");
+          const hash = crypto
+            .pbkdf2Sync(plaintext, salt, 1000, 64, `sha512`)
+            .toString(`hex`);
+
+          this.setDataValue("salt", salt);
+          this.setDataValue("password", hash);
+        },
+      },
     },
     {}
   );

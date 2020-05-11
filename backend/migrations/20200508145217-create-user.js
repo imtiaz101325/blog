@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       username: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true
       },
@@ -26,16 +26,16 @@ module.exports = {
         type: Sequelize.DATE
       },
       status: {
-        type: DataTypes.ENUM,
+        type: Sequelize.ENUM,
         values: ['active', 'inactive'],
         defaultValue: 'inactive'
       },
       isAdmin: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         defaultValue: false
       },
       isAuthor: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         defaultValue: false
       },
       token: {
@@ -45,7 +45,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       email: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true
       },

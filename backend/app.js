@@ -3,11 +3,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-const db = require('./db');
+const db = require('./models');
 
 async function checkConnection() {
   try {
-    await db.authenticate();
+    await db.sequelize.authenticate();
     console.log('Successfully connected to database.');
   } catch (err) {
     console.error('Unable to connect to the database:', err);

@@ -19,7 +19,7 @@ node --version
 npm --version
 ```
 
-# Front-end
+## Front-end
 
 The front-end is built with React.js. To start the app run the following commands from the `./frontend` directory:
 
@@ -39,7 +39,7 @@ app should start at `localhost:3000`
 npm test
 ```
 
-# Backend
+## Backend
 
 1. Install PostgresSQL following [this](https://wiki.postgresql.org/wiki/Detailed_installation_guides) or any other guide.
 
@@ -53,6 +53,11 @@ alter database blog owner to blog;
 3. Install dependencies:
 ```
 npm install
+```
+
+4. Migrate database tables
+```
+npx sequelize-cli db:migrate
 ```
 
 4. Start the backend app:

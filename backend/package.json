@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,5 +15,8 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.7",
     "sequelize-cli": "^5.5.1"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
   }
 }

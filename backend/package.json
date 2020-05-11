@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.3",
     "prettier": "2.0.5"
   }
 }

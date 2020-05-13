@@ -1,7 +1,7 @@
-import kenx from "knex";
+import knex from "knex";
 
-const config = require('../knexfile.ts');
+const config = require('../knexfile');
 const currentEnv: string | undefined = process.env.NODE_ENV;
 const currentConfig = currentEnv && config[currentEnv];
 
-export default kenx(currentConfig);
+export default knex(currentConfig);

@@ -1,14 +1,14 @@
-const crypto = require("crypto");
+import crypto from "crypto";
 
-function getHash(plaintext, salt) {
+export function getHash(plaintext: string, salt: string) {
   return crypto.pbkdf2Sync(plaintext, salt, 1000, 64, `sha512`).toString(`hex`);
 }
 
-function generateSalt() {
+export function generateSalt() {
   return crypto.randomBytes(16).toString("hex");
 }
 
-function generateHash(plaintext) {
+export function generateHash(plaintext: string) {
   const salt = generateSalt();
 
   return {
@@ -16,8 +16,3 @@ function generateHash(plaintext) {
     hash: getHash(plaintext, salt),
   };
 }
-
-module.exports = {
-  generateHash,
-  getHash,
-};

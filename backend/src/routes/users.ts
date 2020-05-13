@@ -1,6 +1,7 @@
 import express from "express";
 
-const { User } = require("../models");
+import User, { getRole } from "../db/user";
+import { generateHash } from "../helpers/auth";
 
 const router = express.Router();
 
@@ -13,33 +14,35 @@ router.post("/", async (req: express.Request, res: express.Response) => {
       .end("Request must contain username, email and password");
   }
 
-  const users = await User.findAll({
-    attributes: ["email", "username"],
-    where: {
-      email,
-      username,
-    },
+  const users = await User.select("username", "email").where({
+    username,
+    email,
   });
 
   if (users.length) {
     return res.status(400).end("The username or email already exists");
   }
 
+  const { salt, hash } = generateHash(password);
   try {
-    const { id, username: resUsername, role, email: resEmail, createdAt } = await User.create({
-      firstName,
-      lastName,
-      username,
-      about,
-      email,
-      password,
-    });
+    const [{ id, createdAt }] = await User.insert(
+      {
+        firstName,
+        lastName,
+        username,
+        about,
+        email,
+        salt,
+        password: hash,
+      },
+      ["id", "createdAt"]
+    );
 
     return res.send({
       id,
-      username: resUsername,
-      role,
-      email: resEmail,
+      username,
+      role: getRole(false, false),
+      email,
       createdAt,
     });
   } catch (err) {

@@ -16,8 +16,8 @@ export async function up(knex: Knex): Promise<any> {
     table.string("email").notNullable().unique();
     table.string("salt");
     table.string("password");
-    table.date("createdAt").notNullable();
-    table.date("updatedAt").notNullable();
+    table.date("createdAt").notNullable().defaultTo(knex.fn.now());
+    table.date("updatedAt").notNullable().defaultTo(knex.fn.now());
   });
 }
 

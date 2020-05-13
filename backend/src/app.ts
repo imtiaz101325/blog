@@ -1,9 +1,12 @@
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+import express from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
 
-const db = require("./models");
+import usersRouter from "./routes/users";
+import authRouter from "./routes/auth";
+
+import db from "./models";
 
 async function checkConnection() {
   try {
@@ -16,10 +19,6 @@ async function checkConnection() {
 
 checkConnection();
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const authRouter = require("./routes/auth");
-
 const app = express();
 
 app.use(logger("dev"));
@@ -28,7 +27,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api/v1/", indexRouter);
 app.use("/api/v1/users/", usersRouter);
 app.use("/api/v1/auth/", authRouter);
 

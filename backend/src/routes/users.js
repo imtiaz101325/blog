@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const user = await User.create({
+    const { id, username, role, email, createdAt } = await User.create({
       firstName,
       lastName,
       username,
@@ -34,7 +34,13 @@ router.post("/", async (req, res) => {
       password,
     });
 
-    return res.send(user);
+    return res.send({
+      id,
+      username,
+      role,
+      email,
+      createdAt,
+    });
   } catch (err) {
     console.error(err);
 

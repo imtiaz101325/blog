@@ -61,13 +61,19 @@ alter database blog owner to blog;
 npm install
 ```
 
-4. Migrate database tables:
+4. Build TypeScript from `src`
+
+```
+npm run build
+```
+
+5. Migrate database tables:
 
 ```
 npm run migration
 ```
 
-5. Start the backend app:
+6. Start the backend app:
 
 ```
 npm start

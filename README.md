@@ -73,6 +73,8 @@ npm run migration
 npm start
 ```
 
+To watch for changes in `src` and building automatically run `npm run build:watch` on a different terminal window.
+
 app should start at `localhost:8000`
 
 ## Notice
@@ -81,5 +83,5 @@ Please make sure the Front-end is running at `localhost:3000` and the Backend is
 
 # TODO:
 
-1. Add nodemon or similar
-2. Add create-superuser script
+1. Add create-superuser script
+2. Add a `dev` script to run `build:watch` while running `start`

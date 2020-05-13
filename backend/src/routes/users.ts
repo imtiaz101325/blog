@@ -1,9 +1,10 @@
-const express = require("express");
+import express from "express";
 
-const router = express.Router();
 const { User } = require("../models");
 
-router.post("/", async (req, res) => {
+const router = express.Router();
+
+router.post("/", async (req: express.Request, res: express.Response) => {
   const { firstName, lastName, username, about, email, password } = req.body;
 
   if (!username || !email || !password) {
@@ -25,7 +26,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const { id, username, role, email, createdAt } = await User.create({
+    const { id, username: resUsername, role, email: resEmail, createdAt } = await User.create({
       firstName,
       lastName,
       username,
@@ -36,9 +37,9 @@ router.post("/", async (req, res) => {
 
     return res.send({
       id,
-      username,
+      username: resUsername,
       role,
-      email,
+      email: resEmail,
       createdAt,
     });
   } catch (err) {
@@ -48,4 +49,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

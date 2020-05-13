@@ -67,13 +67,7 @@ npm install
 npm run migration
 ```
 
-5. Build the backend:
-
-```
-npm run build
-```
-
-6. Start the backend app:
+5. Start the backend app:
 
 ```
 npm start
@@ -84,3 +78,8 @@ app should start at `localhost:8000`
 ## Notice
 
 Please make sure the Front-end is running at `localhost:3000` and the Backend is running at `localhost:8000` before continuing with development.
+
+# TODO:
+
+1. Add nodemon or similar
+2. Add create-superuser script

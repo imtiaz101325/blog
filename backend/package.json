@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "build": "rimraf build && tsc",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "migrate": "sequelize db:migrate"
+    "migration": "sequelize db:migrate"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

@@ -61,13 +61,19 @@ alter database blog owner to blog;
 npm install
 ```
 
-4. Migrate database tables
+4. Migrate database tables:
 
 ```
-npx sequelize-cli db:migrate
+npm run migration
 ```
 
-4. Start the backend app:
+5. Build the backend:
+
+```
+npm run build
+```
+
+6. Start the backend app:
 
 ```
 npm start

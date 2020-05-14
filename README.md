@@ -89,6 +89,10 @@ app should start at `localhost:8000`
 
 Please make sure the Front-end is running at `localhost:3000` and the Backend is running at `localhost:8000` before continuing with development.
 
+## Seed Data
+
+To use some predefined data for development run `npm run seed`
+
 # TODO:
 
 1. Add create-superuser script

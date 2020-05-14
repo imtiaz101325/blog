@@ -12,8 +12,8 @@ import knex from "./db";
 export const debug = Debug("backend:server");
 async function checkConnection() {
   try {
-    await knex.raw('select 1+1 as result');
-    
+    await knex.raw("select 1+1 as result");
+
     debug("Successfully connected to database.");
   } catch (err) {
     debug("Unable to connect to the database:", err);

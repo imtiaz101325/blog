@@ -29,4 +29,4 @@ export function getRole(isAdmin: boolean, isAuthor: boolean): string {
   return "user";
 }
 
-export default knex<User>("Users");
+export default () => knex<User>("Users");

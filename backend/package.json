@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run clean && tsc",
-    "build:watch": "npm run clean && tsc -w",
+    "build": "tsc",
+    "build:watch": "tsc -w",
     "clean": "rimraf build",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "migration": "knex --knexfile build/knexfile.js migrate:latest",

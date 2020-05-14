@@ -55,25 +55,27 @@ create database blog;
 alter database blog owner to blog;
 ```
 
-3. Install dependencies:
+3. Copy `.env-sample` to `.env` and add appropriate environment variables
+
+4. Install dependencies:
 
 ```
 npm install
 ```
 
-4. Build TypeScript from `src`
+5. Build TypeScript from `src`
 
 ```
 npm run build
 ```
 
-5. Migrate database tables:
+6. Migrate database tables:
 
 ```
 npm run migration
 ```
 
-6. Start the backend app:
+7. Start the backend app:
 
 ```
 npm start

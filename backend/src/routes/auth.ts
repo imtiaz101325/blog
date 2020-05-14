@@ -44,6 +44,7 @@ router.post("/", async (req, res) => {
     if (user && user.password === hash) {
       const { id, username, email, isAdmin, isAuthor } = user;
       const expiresAt = new Date(Date.now() + 12096e5);
+      const secret = process.env.JWT_SECRET || "top-secret";
       const token = jwt.sign(
         {
           id,
@@ -52,7 +53,7 @@ router.post("/", async (req, res) => {
           role: getRole(isAdmin, isAuthor),
           expiresAt: expiresAt,
         },
-        "super-top-secret"
+        secret
       );
 
       await UserTable().where(where).first().update({

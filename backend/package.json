@@ -10,7 +10,7 @@
     "migration": "knex --knexfile build/knexfile.js migrate:latest",
     "migration:list": "knex --knexfile build/knexfile.js migrate:list",
     "migration:rollback": "knex --knexfile build/knexfile.js migrate:rollback",
-    "start": "npm run clean && npm run build && nodemon --watch build ./bin/www"
+    "start": "npm run clean && npm run build && nodemon --watch build ./build/server.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

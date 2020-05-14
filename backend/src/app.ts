@@ -5,7 +5,7 @@ import logger from "morgan";
 import Debug from "debug";
 
 import usersRouter from "./routes/users";
-// import authRouter from "./routes/auth";
+import authRouter from "./routes/auth";
 
 import knex from "./db";
 
@@ -31,6 +31,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/v1/users/", usersRouter);
-// app.use("/api/v1/auth/", authRouter);
+app.use("/api/v1/auth/", authRouter);
 
 export default app;

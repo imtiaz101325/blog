@@ -1,7 +1,7 @@
 import * as Knex from "knex";
 import faker from "faker";
 
-import UserTable from "../db/user";
+import UserTable from "../models/user";
 import { generateHash } from "../helpers/auth";
 
 export async function seed(knex: Knex): Promise<any> {

@@ -1,6 +1,6 @@
 import express from "express";
 
-import UserTable, { getRole } from "../db/user";
+import UserTable, { getRole } from "../models/user";
 import { generateHash } from "../helpers/auth";
 import { debug } from "../app";
 

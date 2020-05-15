@@ -3,9 +3,9 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 
 import { getHash } from "../helpers/auth";
-import UserTable, { getRole } from "../db/user";
+import UserTable, { getRole } from "../models/user";
 import { debug } from "../app";
-import knex from "../db";
+import knex from "../models";
 
 const router = express.Router();
 

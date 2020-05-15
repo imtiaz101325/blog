@@ -4,10 +4,10 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import Debug from "debug";
 
-import usersRouter from "./routes/users";
-import authRouter from "./routes/auth";
+import usersRouter from "./controllers/users";
+import authRouter from "./controllers/auth";
 
-import knex from "./db";
+import knex from "./models";
 
 export const debug = Debug("backend:server");
 async function checkConnection() {

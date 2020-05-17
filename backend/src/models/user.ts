@@ -1,32 +1,38 @@
-import knex from "./index";
+import { Model } from "objection";
 
-export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  username: string;
-  about: string;
-  lastLogin: Date;
-  status: string;
-  isAdmin: boolean;
-  isAuthor: boolean;
-  token: string;
-  expiresAt: Date;
-  email: string;
-  salt: string;
-  password: string;
-}
+export default class User extends Model {
+  id!: number;
+  firstName?: string;
+  lastName?: string;
+  username!: string;
+  about?: string;
+  lastLogin?: Date;
+  status?: string;
+  isAdmin?: boolean;
+  isAuthor?: boolean;
+  token?: string;
+  expiresAt?: Date;
+  email!: string;
+  salt!: string;
+  password!: string;
+  createdAt!: Date;
+  updatedAt!: Date;
 
-export function getRole(isAdmin: boolean, isAuthor: boolean): string {
-  if (isAdmin) {
-    return "admin";
+  static tableName = "Users";
+
+  static get virtualAttributes() {
+    return ["role"];
   }
 
-  if (isAuthor) {
-    return "author";
+  get role() {
+    if (this.isAdmin) {
+      return "admin";
+    }
+
+    if (this.isAuthor) {
+      return "author";
+    }
+
+    return "user";
   }
-
-  return "user";
 }
-
-export default () => knex<User>("Users");

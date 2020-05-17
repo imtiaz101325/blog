@@ -1,6 +1,6 @@
 import express from "express";
 
-import UserTable, { getRole } from "../models/user";
+import User from "../models/user";
 import { generateHash } from "../helpers/auth";
 import { debug } from "../app";
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/", async (req: express.Request, res: express.Response) => {
   try {
-    const users = await UserTable().select(
+    const users = await User.query().select(
       "id",
       "firstName",
       "lastName",
@@ -20,14 +20,9 @@ router.get("/", async (req: express.Request, res: express.Response) => {
       "isAuthor",
       "email",
       "createdAt",
-      "updatedAt"
+      "updatedAt",
     );
-    return res.send(
-      users.map(({ isAdmin, isAuthor, ...rest }) => ({
-        ...rest,
-        role: getRole(isAdmin, isAuthor),
-      }))
-    );
+    return res.send(users);
   } catch (err) {
     debug("Error fetching users: ", err);
 
@@ -45,7 +40,7 @@ router.post("/", async (req: express.Request, res: express.Response) => {
   }
 
   // const User = knex<User>("Users");
-  const users = await UserTable().select("username", "email").where({
+  const users = await User.query().select("username", "email").where({
     username,
     email,
   });
@@ -56,8 +51,8 @@ router.post("/", async (req: express.Request, res: express.Response) => {
 
   const { salt, hash } = generateHash(password);
   try {
-    const [{ id, createdAt }] = await UserTable().insert(
-      {
+    const { id, createdAt, role } = await User.query()
+      .insert({
         firstName,
         lastName,
         username,
@@ -65,14 +60,13 @@ router.post("/", async (req: express.Request, res: express.Response) => {
         email,
         salt,
         password: hash,
-      },
-      ["id", "createdAt"]
-    );
+      })
+      .returning(["id", "createdAt"]);
 
     return res.send({
       id,
       username,
-      role: getRole(false, false),
+      role,
       email,
       createdAt,
     });

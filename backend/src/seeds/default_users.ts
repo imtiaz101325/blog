@@ -1,11 +1,10 @@
 import * as Knex from "knex";
 import faker from "faker";
 
-import UserTable from "../models/user";
 import { generateHash } from "../helpers/auth";
 
 export async function seed(knex: Knex): Promise<any> {
-  await UserTable().del();
+  await knex("Users").del();
 
   const { salt, hash: password } = generateHash("password");
   const generateUsers = () =>
@@ -58,5 +57,5 @@ export async function seed(knex: Knex): Promise<any> {
       password,
     }));
 
-  return UserTable().insert(generateUsers());
+  return knex("Users").insert(generateUsers());
 }

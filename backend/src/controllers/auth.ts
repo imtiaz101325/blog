@@ -3,9 +3,9 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 
 import { getHash } from "../helpers/auth";
-import UserTable, { getRole } from "../models/user";
+import User from "../models/user";
 import { debug } from "../app";
-import knex from "../models";
+import knex from "../models/knex";
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const user = await UserTable()
+    const user = await User.query()
       .select(
         "id",
         "username",
@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
 
     const hash = user && getHash(password, user.salt);
     if (user && user.password === hash) {
-      const { id, username, email, isAdmin, isAuthor } = user;
+      const { id, username, email, role} = user;
       const expiresAt = new Date(Date.now() + 12096e5);
       const secret = process.env.JWT_SECRET || "top-secret";
       const token = jwt.sign(
@@ -50,13 +50,13 @@ router.post("/", async (req, res) => {
           id,
           username,
           email,
-          role: getRole(isAdmin, isAuthor),
+          role,
           expiresAt: expiresAt,
         },
         secret
       );
 
-      await UserTable().where(where).first().update({
+      await User.query().where(where).first().update({
         token,
         expiresAt,
         lastLogin: knex.fn.now(),

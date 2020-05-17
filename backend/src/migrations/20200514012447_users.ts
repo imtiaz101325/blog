@@ -14,8 +14,8 @@ export async function up(knex: Knex): Promise<any> {
     table.string("token", 1024);
     table.date("expiresAt");
     table.string("email").notNullable().unique();
-    table.string("salt");
-    table.string("password");
+    table.string("salt").notNullable();
+    table.string("password").notNullable();
     table.date("createdAt").notNullable().defaultTo(knex.fn.now());
     table.date("updatedAt").notNullable().defaultTo(knex.fn.now());
   });

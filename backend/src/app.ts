@@ -5,8 +5,8 @@ import logger from "morgan";
 import Debug from "debug";
 import { Model } from "objection"
 
-import usersRouter from "./controllers/users";
-import authRouter from "./controllers/auth";
+import usersRouter from "./routes/users";
+import authRouter from "./routes/auth";
 
 import knex from "./models/knex";
 

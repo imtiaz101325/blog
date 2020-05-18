@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 import BaseController from "./BaseController";
 import User from "../models/user";
-import { getHash } from "../helpers/auth";
+import { getHash, secret } from "../helpers/auth";
 import knex from "../models/knex";
 import { debug } from "../app";
 
@@ -47,7 +47,7 @@ export default class AuthController extends BaseController {
       if (user && user.password === hash) {
         const { id, username, email, role } = user;
         const expiresAt = new Date(Date.now() + 12096e5);
-        const secret = process.env.JWT_SECRET || "top-secret";
+
         const token = jwt.sign(
           {
             id,

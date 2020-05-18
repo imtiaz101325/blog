@@ -16,3 +16,5 @@ export function generateHash(plaintext: string) {
     hash: getHash(plaintext, salt),
   };
 }
+
+export const secret = process.env.JWT_SECRET || "top-secret";

@@ -19,6 +19,32 @@ node --version
 npm --version
 ```
 
+## App
+
+Setup React Native development environment by following the `React Native CLI Quickstart` version of the [official guide](https://reactnative.dev/docs/environment-setup)
+
+Make sure to have a device or emulator setup before starting.
+
+1. Run the `Metro Bundler`:
+
+```
+npx react-native start
+```
+
+2. Run the platform specific command to start the project:
+
+Android:
+
+```
+npx react-native run-android
+```
+
+IOS:
+
+```
+npx react-native run-ios
+```
+
 ## Front-end
 
 The front-end is built with React.js. To start the app run the following commands from the `./frontend` directory:

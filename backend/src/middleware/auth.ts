@@ -3,12 +3,8 @@ import * as jwt from "jsonwebtoken";
 
 import { secret } from "../helpers/auth";
 
-interface IRequestUser extends express.Request {
-  user: object | undefined;
-}
-
 export default function isAuthenticated(
-  req: IRequestUser,
+  req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) {
@@ -26,6 +22,8 @@ export default function isAuthenticated(
       next();
     });
   } else {
-    res.status(401).end("Please supply authentication token to access protected route.");
+    res
+      .status(401)
+      .end("Please supply authentication token to access protected route.");
   }
 }

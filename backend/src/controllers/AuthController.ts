@@ -74,7 +74,7 @@ export default class AuthController extends BaseController {
     } catch (err) {
       debug("Error querying user table", err);
 
-      return res.status(400).end("Server error");
+      return res.status(500).end("Could not query database.");
     }
   }
 }

@@ -8,6 +8,7 @@ export default function isAuthenticated(
   res: express.Response,
   next: express.NextFunction
 ) {
+  //TODO: check token expiration
   const authHeader = req.headers.authorization;
 
   if (authHeader) {

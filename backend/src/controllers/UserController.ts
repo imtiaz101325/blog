@@ -46,40 +46,46 @@ export default class UserController extends BaseController {
     }
 
     // const User = knex<User>("Users");
-    const users = await User.query().select("username", "email").where({
-      username,
-      email,
-    });
-
-    if (users.length) {
-      return res.status(400).end("The username or email already exists");
-    }
-
-    const { salt, hash } = generateHash(password);
     try {
-      const { id, createdAt, role } = await User.query()
-        .insert({
-          firstName,
-          lastName,
-          username,
-          about,
-          email,
-          salt,
-          password: hash,
-        })
-        .returning(["id", "createdAt"]);
-
-      return res.send({
-        id,
+      const users = await User.query().select("username", "email").where({
         username,
-        role,
         email,
-        createdAt,
       });
-    } catch (err) {
-      debug("Error inserting User into database", err);
 
-      return res.status(400).end("Could not create database entry.");
+      if (users.length) {
+        return res.status(401).end("The username or email already exists");
+      }
+
+      const { salt, hash } = generateHash(password);
+      try {
+        const { id, createdAt, role } = await User.query()
+          .insert({
+            firstName,
+            lastName,
+            username,
+            about,
+            email,
+            salt,
+            password: hash,
+          })
+          .returning(["id", "createdAt"]);
+
+        return res.send({
+          id,
+          username,
+          role,
+          email,
+          createdAt,
+        });
+      } catch (err) {
+        debug("Error inserting User into database", err);
+
+        return res.status(500).end("Could not create database entry.");
+      }
+    } catch (err) {
+      debug("Error querying database", err);
+
+      return res.status(500).end("Could not query database.");
     }
   }
 }

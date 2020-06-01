@@ -45,7 +45,7 @@ export default class UserController extends BaseController {
         .end("Request must contain username, email and password");
     }
 
-    // const User = knex<User>("Users");
+    // TODO: check if email or username exists currently checking both using logical and
     try {
       const users = await User.query().select("username", "email").where({
         username,

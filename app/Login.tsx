@@ -7,7 +7,7 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-community/async-storage";
 import { Button } from "react-native";
 
 const lightShade = "#f4f4f4";
@@ -55,7 +55,7 @@ function App() {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username,
@@ -65,14 +65,14 @@ function App() {
 
       if (response.ok) {
         const { token } = await response.json();
-        await AsyncStorage.setItem('@access_token', token);
-        
-        history.push('/users');
+        await AsyncStorage.setItem("@access_token", token);
+
+        history.push("/users");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   return (
     <LoginContainer>
@@ -89,7 +89,7 @@ function App() {
           onChangeText={(value) => setPassword(value)}
         />
       </LoginContent>
-      <Button title="Login" onPress={ handleLogin } />
+      <Button title="Login" onPress={handleLogin} />
     </LoginContainer>
   );
 }

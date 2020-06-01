@@ -16,10 +16,10 @@ function Routes() {
   return (
     <NativeRouter>
       <Switch>
-        <Route path="/login" component={ Login } />
-        <Route path="/signup" component={ SignUp } />
-        <Route path="/users" component={ Users } />
-        <Route exact path="/" component={ Landing } />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/users" component={Users} />
+        <Route exact path="/" component={Landing} />
       </Switch>
     </NativeRouter>
   );

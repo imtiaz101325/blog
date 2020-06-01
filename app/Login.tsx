@@ -6,6 +6,9 @@
 
 import React, { useState } from "react";
 import styled from "styled-components/native";
+import { useHistory } from "react-router-native";
+import AsyncStorage from '@react-native-community/async-storage';
+import { Button } from "react-native";
 
 const lightShade = "#f4f4f4";
 const darkShade = "#271d35";
@@ -31,6 +34,7 @@ const LoginInput = styled.TextInput`
   border-top-width: 0;
   border-left-width: 0;
   border-right-width: 0;
+  color: ${lightShade};
 `;
 
 const LoginContent = styled.View`
@@ -38,9 +42,37 @@ const LoginContent = styled.View`
   padding: 16px;
   background-color: #271d35;
 `;
+
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const history = useHistory();
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://0.0.0.0:8000/api/v1/auth", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        const { token } = await response.json();
+        await AsyncStorage.setItem('@access_token', token);
+        
+        history.push('/users');
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <LoginContainer>
@@ -57,6 +89,7 @@ function App() {
           onChangeText={(value) => setPassword(value)}
         />
       </LoginContent>
+      <Button title="Login" onPress={ handleLogin } />
     </LoginContainer>
   );
 }

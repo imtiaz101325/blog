@@ -20,7 +20,7 @@ function SignUp() {
 
   const handleSignUp = async () => {
     try {
-      const response: any = await fetch("https://192.168.10.52:8000//users", {
+      const response: any = await fetch("http://0.0.0.0:8000/api/v1/users", {
         method: "POST",
         headers: {
           Accept: "application/json",

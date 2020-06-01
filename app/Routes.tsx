@@ -1,3 +1,9 @@
+/**
+ * These enable formatting code using prettier
+ *
+ * @format
+ */
+
 import React from "react";
 import { NativeRouter, Route, Switch } from "react-router-native";
 

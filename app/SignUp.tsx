@@ -1,5 +1,12 @@
+/**
+ * These enable formatting code using prettier
+ *
+ * @format
+ */
+
 import React, { useState } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
+import { useHistory } from "react-router-native";
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -8,6 +15,34 @@ function SignUp() {
   const [about, setAbout] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const history = useHistory();
+
+  const handleSignUp = async () => {
+    try {
+      const response: any = await fetch("https://192.168.10.52:8000//users", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          username,
+          about,
+          email,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        history.push('/login');
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return <View>
     <Text>Sign Up</Text>
@@ -25,6 +60,7 @@ function SignUp() {
       <Text>Password</Text>
       <TextInput value={ password } onChangeText={(value) => setPassword(value)} />
     </View>
+    <Button title="Sign Up" onPress={ handleSignUp } />
   </View>
 }
 

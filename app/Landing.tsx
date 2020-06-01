@@ -21,6 +21,9 @@ function Landing() {
       <Link to="/login">
         <Text>Login</Text>
       </Link>
+      <Link to="/signup">
+        <Text>SignUp</Text>
+      </Link>
     </HomePageContainer>
   );
 }

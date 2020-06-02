@@ -47,20 +47,22 @@ function Users() {
 
   return (
     <AppContainer>
-      <PageTitle>Users</PageTitle>
-      {
-        users.map(({
-          id,
-          username,
-          role,
-          email,
-        }) => <Row key={ id }>
-          <Text>ID: {id}</Text>
-          <Text>Username: {username}</Text>
-          <Text>Role: {role}</Text>
-          <Text>Email: {email}</Text>
-        </Row>)
-      }
+      <ScrollView>
+        <PageTitle>Users</PageTitle>
+        {
+          users.map(({
+            id,
+            username,
+            role,
+            email,
+          }) => <Row key={ id }>
+            <Text>ID: {id}</Text>
+            <Text>Username: {username}</Text>
+            <Text>Role: {role}</Text>
+            <Text>Email: {email}</Text>
+          </Row>)
+        }
+      </ScrollView>
     </AppContainer>
   );
 };

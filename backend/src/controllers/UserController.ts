@@ -69,7 +69,8 @@ export default class UserController extends BaseController {
             password: hash,
           })
           .returning(["id", "createdAt"]);
-
+        
+        // TODO: return name
         return res.send({
           id,
           username,

@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
+
+import AppContainer from "./AppContainer";
+import PageTitle from "./PageTitle";
+
+const Row = styled.View`
+  margin-bottom: 8px;
+`;
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -39,21 +46,22 @@ function Users() {
   }, []);
 
   return (
-    <>
+    <AppContainer>
+      <PageTitle>Users</PageTitle>
       {
         users.map(({
           id,
           username,
           role,
           email,
-        }) => <View key={ id }>
+        }) => <Row key={ id }>
           <Text>ID: {id}</Text>
           <Text>Username: {username}</Text>
           <Text>Role: {role}</Text>
           <Text>Email: {email}</Text>
-        </View>)
+        </Row>)
       }
-    </>
+    </AppContainer>
   );
 };
 

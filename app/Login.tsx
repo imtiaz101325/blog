@@ -10,37 +10,29 @@ import { useHistory } from "react-router-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { Button } from "react-native";
 
-const lightShade = "#f4f4f4";
-const darkShade = "#271d35";
+import AppContainer from "./AppContainer";
+import PageTitle from "./PageTitle";
 
-const LoginContainer = styled.View`
-  padding: 16px;
-  background-color: ${lightShade};
-  height: 100%;
+import styles from "./styles";
+
+const LoginContainer = styled(AppContainer)`
   justify-content: space-between;
 `;
 
 const LightText = styled.Text`
-  color: ${lightShade};
+  color: ${styles.lightShade};
 `;
 
 const DarkText = styled.Text`
-  color: ${darkShade};
-`;
-
-const LoginTitle = styled(DarkText)`
-  font-size: 32px;
-  text-align: center;
-  font-weight: bold;
-  color: ${darkShade};
+  color: ${styles.darkShade};
 `;
 
 const LoginInput = styled.TextInput`
-  border: 2px solid ${darkShade};
+  border: 2px solid ${styles.darkShade};
   border-top-width: 0;
   border-left-width: 0;
   border-right-width: 0;
-  color: ${darkShade};
+  color: ${styles.darkShade};
 `;
 
 const LoginContent = styled.View`
@@ -83,7 +75,7 @@ function App() {
 
   return (
     <LoginContainer>
-      <LoginTitle>Login</LoginTitle>
+      <PageTitle>Login</PageTitle>
       <LoginContent>
         <DarkText>Username</DarkText>
         <LoginInput

@@ -7,6 +7,29 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import { useHistory } from "react-router-native";
+import styled from "styled-components/native";
+
+import AppContainer from "./AppContainer";
+import PageTitle from "./PageTitle";
+
+import styles from "./styles";
+
+const SignUpContainer = styled(AppContainer)`
+  justify-content: space-between;
+`;
+
+const SignUpInput = styled.TextInput`
+  border: 2px solid ${styles.darkShade};
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  color: ${styles.darkShade};
+`;
+
+const SignUpContent = styled.View`
+  height: 80%;
+  justify-content: space-around;
+`;
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -45,36 +68,48 @@ function SignUp() {
   };
 
   return (
-    <View>
-      <Text>Sign Up</Text>
-      <View>
-        <Text>First Name</Text>
-        <TextInput
-          value={firstName}
-          onChangeText={(value) => setFirstName(value)}
-        />
-        <Text>Last Name</Text>
-        <TextInput
-          value={lastName}
-          onChangeText={(value) => setLastName(value)}
-        />
-        <Text>Username</Text>
-        <TextInput
-          value={username}
-          onChangeText={(value) => setUsername(value)}
-        />
-        <Text>About</Text>
-        <TextInput value={about} onChangeText={(value) => setAbout(value)} />
-        <Text>Email</Text>
-        <TextInput value={email} onChangeText={(value) => setEmail(value)} />
-        <Text>Password</Text>
-        <TextInput
-          value={password}
-          onChangeText={(value) => setPassword(value)}
-        />
-      </View>
-      <Button title="Sign Up" onPress={handleSignUp} />
-    </View>
+    <SignUpContainer>
+      <PageTitle>Sign Up</PageTitle>
+      <SignUpContent>
+        <View>
+          <Text>First Name</Text>
+          <SignUpInput
+            value={firstName}
+            onChangeText={(value) => setFirstName(value)}
+          />
+        </View>
+        <View>
+          <Text>Last Name</Text>
+          <SignUpInput
+            value={lastName}
+            onChangeText={(value) => setLastName(value)}
+          />
+        </View>
+        <View>
+          <Text>Username</Text>
+          <SignUpInput
+            value={username}
+            onChangeText={(value) => setUsername(value)}
+          />
+        </View>
+        <View>
+          <Text>About</Text>
+          <SignUpInput value={about} onChangeText={(value) => setAbout(value)} />
+        </View>
+        <View>
+          <Text>Email</Text>
+          <SignUpInput value={email} onChangeText={(value) => setEmail(value)} />
+        </View>
+        <View>
+          <Text>Password</Text>
+          <SignUpInput
+            value={password}
+            onChangeText={(value) => setPassword(value)}
+          />
+        </View>
+        <Button title="Sign Up" onPress={handleSignUp} />
+      </SignUpContent>
+    </SignUpContainer>
   );
 }
 

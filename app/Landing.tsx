@@ -6,23 +6,15 @@
 
 import React from "react";
 import styled from "styled-components/native";
-import { useHistory } from "react-router-native";
+import { useHistory, Link } from "react-router-native";
 
-const lightShade = "#f4f4f4";
-const darkShade = "#271d35";
+import AppContainer from "./AppContainer";
+import PageTitle from "./PageTitle";
 
-const HomePageContainer = styled.View`
-  padding: 16px;
-  background-color: ${lightShade};
-  height: 100%;
+import styles from "./styles";
+
+const HomePageContainer = styled(AppContainer)`
   justify-content: space-between;
-`;
-
-const HomePageTitle = styled.Text`
-  font-size: 32px;
-  text-align: center;
-  font-weight: bold;
-  color: ${darkShade};
 `;
 
 const ActionContainer = styled.View`
@@ -38,7 +30,7 @@ function Landing() {
 
   return (
     <HomePageContainer>
-      <HomePageTitle>Blog</HomePageTitle>
+      <PageTitle>Blog</PageTitle>
       <ActionContainer>
         <StyledButton title="Login" onPress={() => history.push("/login")} />
         <StyledButton title="Sign Up" onPress={() => history.push("/signup")} />

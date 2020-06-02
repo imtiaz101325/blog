@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import { useHistory } from "react-router-native";
+import styled from "styled-components/native";
+
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -37,7 +39,7 @@ function Users() {
   }, []);
 
   return (
-    <View>
+    <>
       {
         users.map(({
           id,
@@ -51,7 +53,7 @@ function Users() {
           <Text>Email: {email}</Text>
         </View>)
       }
-    </View>
+    </>
   );
 };
 

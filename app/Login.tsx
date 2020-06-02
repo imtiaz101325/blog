@@ -14,7 +14,10 @@ const lightShade = "#f4f4f4";
 const darkShade = "#271d35";
 
 const LoginContainer = styled.View`
-  margin: 2px;
+  padding: 16px;
+  background-color: ${lightShade};
+  height: 100%;
+  justify-content: space-between;
 `;
 
 const LightText = styled.Text`
@@ -26,21 +29,25 @@ const DarkText = styled.Text`
 `;
 
 const LoginTitle = styled(DarkText)`
-  font-size: 24px;
+  font-size: 32px;
+  text-align: center;
+  font-weight: bold;
+  color: ${darkShade};
 `;
 
 const LoginInput = styled.TextInput`
-  border: 2px solid #f4f4f4;
+  border: 2px solid ${darkShade};
   border-top-width: 0;
   border-left-width: 0;
   border-right-width: 0;
-  color: ${lightShade};
+  color: ${darkShade};
 `;
 
 const LoginContent = styled.View`
   margin-top: 8px;
   padding: 16px;
-  background-color: #271d35;
+  height: 300px;
+  justify-content: space-around;
 `;
 
 function App() {
@@ -78,18 +85,18 @@ function App() {
     <LoginContainer>
       <LoginTitle>Login</LoginTitle>
       <LoginContent>
-        <LightText>Username</LightText>
+        <DarkText>Username</DarkText>
         <LoginInput
           value={username}
           onChangeText={(value) => setUsername(value)}
         />
-        <LightText>password</LightText>
+        <DarkText>password</DarkText>
         <LoginInput
           value={password}
           onChangeText={(value) => setPassword(value)}
         />
+        <Button title="Login" onPress={handleLogin} />
       </LoginContent>
-      <Button title="Login" onPress={handleLogin} />
     </LoginContainer>
   );
 }

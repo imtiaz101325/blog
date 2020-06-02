@@ -22,8 +22,7 @@ const ActionContainer = styled.View`
   height: 80px;
 `;
 
-const StyledButton = styled.Button`
-`;
+const StyledButton = styled.Button``;
 
 function Landing() {
   const history = useHistory();

@@ -94,11 +94,17 @@ function SignUp() {
         </View>
         <View>
           <Text>About</Text>
-          <SignUpInput value={about} onChangeText={(value) => setAbout(value)} />
+          <SignUpInput
+            value={about}
+            onChangeText={(value) => setAbout(value)}
+          />
         </View>
         <View>
           <Text>Email</Text>
-          <SignUpInput value={email} onChangeText={(value) => setEmail(value)} />
+          <SignUpInput
+            value={email}
+            onChangeText={(value) => setEmail(value)}
+          />
         </View>
         <View>
           <Text>Password</Text>

@@ -36,7 +36,5 @@ export default class User extends Model {
     return "user";
   }
 
-  info() {
-    
-  }
+  info() {}
 }

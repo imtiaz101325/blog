@@ -12,6 +12,7 @@ import Landing from "./Landing";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Users from "./Users";
+import Home from "./Home";
 
 function Routes() {
   const history = useHistory();
@@ -26,6 +27,7 @@ function Routes() {
       <Route path="/login" component={Login} />
       <Route path="/signup" component={SignUp} />
       <Route path="/users" component={Users} />
+      <Route path="/home" component={Home} />
       <Route exact path="/" component={Landing} />
     </Switch>
   );

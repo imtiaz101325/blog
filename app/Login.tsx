@@ -9,6 +9,7 @@ import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { Button } from "react-native";
+import decode from "jwt-decode";
 
 import AppContainer from "./AppContainer";
 import PageTitle from "./PageTitle";
@@ -66,7 +67,13 @@ function App() {
         const { token } = await response.json();
         await AsyncStorage.setItem("@access_token", token);
 
-        history.push("/users");
+        const { role } = decode(token);
+
+        if (role === "admin") {
+          history.push("/users");
+        } else {
+          history.push("/home");
+        }
       }
     } catch (err) {
       console.log(err);

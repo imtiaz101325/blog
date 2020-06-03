@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/hooks": "^2.5.1",
+    "jwt-decode": "^2.2.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-router-native": "^5.2.0",
@@ -23,6 +24,7 @@
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^1.0.0",
     "@types/jest": "^24.0.24",
+    "@types/jwt-decode": "^2.2.1",
     "@types/react-native": "^0.62.0",
     "@types/react-router-native": "^5.1.0",
     "@types/react-test-renderer": "16.9.2",

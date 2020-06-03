@@ -91,6 +91,7 @@ function App() {
         />
         <DarkText>password</DarkText>
         <LoginInput
+          secureTextEntry
           value={password}
           onChangeText={(value) => setPassword(value)}
         />

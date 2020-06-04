@@ -8,15 +8,28 @@ export default function isAuthenticated(
   res: express.Response,
   next: express.NextFunction
 ) {
-  //TODO: check token expiration
   const authHeader = req.headers.authorization;
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
+    interface IUser {
+      id: number,
+      username: string,
+      email: string,
+      expiresAt: string,
+      iat: string,
+    }
+
     jwt.verify(token, secret, (err, user) => {
       if (err) {
-        return res.status(403).end("Could not verify access token");
+        return res.status(403).end("Could not verify access token.");
+      }
+
+      if (user && new Date() < new Date((<IUser>user).expiresAt)) {
+        res
+          .status(401)
+          .end("Token Expired.");
       }
 
       req.user = user;

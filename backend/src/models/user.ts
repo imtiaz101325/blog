@@ -36,5 +36,10 @@ export default class User extends Model {
     return "user";
   }
 
-  info() {}
+  get name() {
+    const firstName = this.firstName || "";
+    const lastName = this.lastName || "";
+
+    return `${firstName} ${lastName}`;
+  }
 }

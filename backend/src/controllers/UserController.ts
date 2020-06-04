@@ -58,7 +58,7 @@ export default class UserController extends BaseController {
 
       const { salt, hash } = generateHash(password);
       try {
-        const { id, createdAt, role } = await User.query()
+        const { id, createdAt, role, name } = await User.query()
           .insert({
             firstName,
             lastName,
@@ -70,9 +70,9 @@ export default class UserController extends BaseController {
           })
           .returning(["id", "createdAt"]);
 
-        // TODO: return name
         return res.send({
           id,
+          name,
           username,
           role,
           email,

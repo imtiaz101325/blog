@@ -4,14 +4,14 @@
  * @format
  */
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
-import { useHistory, Link } from "react-router-native";
+import { useHistory } from "react-router-native";
 
 import AppContainer from "./AppContainer";
 import PageTitle from "./PageTitle";
 
-import styles from "./styles";
+import useAccessToken from "./useAccessToken";
 
 const HomePageContainer = styled(AppContainer)`
   justify-content: space-between;
@@ -26,6 +26,13 @@ const StyledButton = styled.Button``;
 
 function Landing() {
   const history = useHistory();
+  const user = useAccessToken();
+
+  useEffect(() => {
+    if (user.token) {
+      history.push("/home");
+    }
+  }, [user]);
 
   return (
     <HomePageContainer>

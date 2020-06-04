@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { Text, ScrollView } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
-
 import AppContainer from "./AppContainer";
 import PageTitle from "./PageTitle";
+
+import useAccessToken from "./useAccessToken";
 
 const Row = styled.View`
   margin-bottom: 8px;
@@ -16,16 +17,15 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   const history = useHistory();
+  const user = useAccessToken();
 
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const token = await AsyncStorage.getItem('@access_token');
-
-        if(token !== null) {
+        if(user.token) {
           const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
             headers: {
-              "Authorization": `Barer ${token}`
+              "Authorization": `Barer ${user.token}`
             }
           });
 
@@ -43,7 +43,7 @@ function Users() {
     }
 
     fetchUsers();
-  }, []);
+  }, [user]);
 
   return (
     <AppContainer>

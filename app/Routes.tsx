@@ -5,14 +5,15 @@
  */
 
 import React from "react";
-import { NativeRouter, Route, Switch, useHistory } from "react-router-native";
+import { Route, Switch, useHistory } from "react-router-native";
 import { useBackHandler } from "@react-native-community/hooks";
 
-import Landing from "./Landing";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import Users from "./Users";
-import Home from "./Home";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Users from "./pages/Users";
+import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
 
 function Routes() {
   const history = useHistory();
@@ -23,13 +24,16 @@ function Routes() {
   });
 
   return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={SignUp} />
-      <Route path="/users" component={Users} />
-      <Route path="/home" component={Home} />
-      <Route exact path="/" component={Landing} />
-    </Switch>
+    <>
+      <Navbar />
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/users" component={Users} />
+        <Route path="/home" component={Home} />
+        <Route exact path="/" component={Landing} />
+      </Switch>
+    </>
   );
 }
 

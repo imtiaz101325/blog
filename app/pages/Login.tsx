@@ -11,10 +11,12 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { Button } from "react-native";
 import decode from "jwt-decode";
 
-import AppContainer from "./AppContainer";
-import PageTitle from "./PageTitle";
+import AppContainer from "../components/AppContainer";
+import PageTitle from "../PageTitle";
 
-import styles from "./styles";
+import useAccessToken from "../hooks/useAccessToken";
+
+import styles from "../styles";
 
 const LoginContainer = styled(AppContainer)`
   justify-content: space-between;
@@ -48,6 +50,7 @@ function App() {
   const [password, setPassword] = useState("");
 
   const history = useHistory();
+  const [user, setToken, clearUser] = useAccessToken();
 
   const handleLogin = async () => {
     try {
@@ -65,7 +68,7 @@ function App() {
 
       if (response.ok) {
         const { token } = await response.json();
-        await AsyncStorage.setItem("@access_token", token);
+        setToken(token);
 
         const { role } = decode(token);
 

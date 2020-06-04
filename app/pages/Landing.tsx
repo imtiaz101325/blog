@@ -8,10 +8,10 @@ import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
 
-import AppContainer from "./AppContainer";
-import PageTitle from "./PageTitle";
+import AppContainer from "../components/AppContainer";
+import PageTitle from "../PageTitle";
 
-import useAccessToken from "./useAccessToken";
+import useAccessToken from "../hooks/useAccessToken";
 
 const HomePageContainer = styled(AppContainer)`
   justify-content: space-between;
@@ -26,7 +26,7 @@ const StyledButton = styled.Button``;
 
 function Landing() {
   const history = useHistory();
-  const user = useAccessToken();
+  const [user, setToken, clearUser] = useAccessToken();
 
   useEffect(() => {
     if (user.token) {

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Text, ScrollView } from "react-native";
-import AsyncStorage from '@react-native-community/async-storage';
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
-import AppContainer from "./AppContainer";
-import PageTitle from "./PageTitle";
+import AppContainer from "../components/AppContainer";
+import PageTitle from "../PageTitle";
 
-import useAccessToken from "./useAccessToken";
+import useAccessToken from "../hooks/useAccessToken";
 
 const Row = styled.View`
   margin-bottom: 8px;
@@ -17,7 +16,7 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   const history = useHistory();
-  const user = useAccessToken();
+  const [user, setToken, clearUser] = useAccessToken();
 
   useEffect(() => {
     async function fetchUsers() {

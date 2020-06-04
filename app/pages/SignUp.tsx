@@ -9,10 +9,10 @@ import { View, Text, TextInput, Button } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
-import AppContainer from "./AppContainer";
-import PageTitle from "./PageTitle";
+import AppContainer from "../components/AppContainer";
+import PageTitle from "../PageTitle";
 
-import styles from "./styles";
+import styles from "../styles";
 
 const SignUpContainer = styled(AppContainer)`
   justify-content: space-between;

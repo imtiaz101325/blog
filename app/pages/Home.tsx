@@ -1,7 +1,7 @@
 import React from "react";
 
-import AppContainer from "./AppContainer";
-import PageTitle from "./PageTitle";
+import AppContainer from "../components/AppContainer";
+import PageTitle from "../PageTitle";
 
 function Home() {
   return (

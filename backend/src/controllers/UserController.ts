@@ -25,6 +25,7 @@ export default class UserController extends BaseController {
         "createdAt",
         "updatedAt"
       );
+
       return res.send(users);
     } catch (err) {
       debug("Error fetching users: ", err);
@@ -45,12 +46,15 @@ export default class UserController extends BaseController {
         .end("Request must contain username, email and password");
     }
 
-    // TODO: check if email or username exists currently checking both using logical and
     try {
-      const users = await User.query().select("username", "email").where({
-        username,
-        email,
-      });
+      const users = await User.query()
+        .select("username", "email")
+        .where({
+          username,
+        })
+        .orWhere({
+          email,
+        });
 
       if (users.length) {
         return res.status(401).end("The username or email already exists");

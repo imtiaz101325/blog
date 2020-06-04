@@ -25,8 +25,7 @@ export default class AuthController extends BaseController {
       | {
           email: string;
         } = { username };
-    if (validator.isEmail(username)) {4
-      // TODO: debug passing email not working
+    if (validator.isEmail(username)) {
       where = { email: username };
     }
 

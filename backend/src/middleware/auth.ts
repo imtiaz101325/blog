@@ -14,11 +14,11 @@ export default function isAuthenticated(
     const token = authHeader.split(" ")[1];
 
     interface IUser {
-      id: number,
-      username: string,
-      email: string,
-      expiresAt: string,
-      iat: string,
+      id: number;
+      username: string;
+      email: string;
+      expiresAt: string;
+      iat: string;
     }
 
     jwt.verify(token, secret, (err, user) => {
@@ -26,10 +26,8 @@ export default function isAuthenticated(
         return res.status(403).end("Could not verify access token.");
       }
 
-      if (user && new Date() < new Date((<IUser>user).expiresAt)) {
-        res
-          .status(401)
-          .end("Token Expired.");
+      if (user && new Date() > new Date((<IUser>user).expiresAt)) {
+        return res.status(401).end("Token Expired.");
       }
 
       req.user = user;

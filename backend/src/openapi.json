@@ -318,6 +318,10 @@
           "role": {
             "type": "string",
             "description": "Virtual field"
+          },
+          "name": {
+            "type": "string",
+            "description": "Virtual field"
           }
         }
       },
@@ -383,6 +387,10 @@
             "format": "date-time"
           },
           "role": {
+            "type": "string",
+            "description": "Virtual field"
+          },
+          "name": {
             "type": "string",
             "description": "Virtual field"
           }

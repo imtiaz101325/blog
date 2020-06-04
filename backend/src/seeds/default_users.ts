@@ -11,37 +11,37 @@ export async function seed(knex: Knex): Promise<any> {
     [
       {
         username: "admin",
-        email: "admin@bolg.com",
+        email: "admin@blog.com",
         isAdmin: true,
         isAuthor: false,
       },
       {
         username: "admin2",
-        email: "admin2@bolg.com",
+        email: "admin2@blog.com",
         isAdmin: true,
         isAuthor: false,
       },
       {
         username: "author",
-        email: "author@bolg.com",
+        email: "author@blog.com",
         isAdmin: false,
         isAuthor: true,
       },
       {
         username: "author2",
-        email: "author2@bolg.com",
+        email: "author2@blog.com",
         isAdmin: false,
         isAuthor: true,
       },
       {
         username: "user",
-        email: "user@bolg.com",
+        email: "user@blog.com",
         isAdmin: false,
         isAuthor: false,
       },
       {
         username: "user2",
-        email: "user2@bolg.com",
+        email: "user2@blog.com",
         isAdmin: false,
         isAuthor: false,
       },

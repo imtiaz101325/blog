@@ -21,7 +21,7 @@ export default class User extends Model {
   static tableName = "Users";
 
   static get virtualAttributes() {
-    return ["role"];
+    return ["role", "name"];
   }
 
   get role() {

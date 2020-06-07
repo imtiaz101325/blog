@@ -3,8 +3,16 @@ import styled from "styled-components/native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useHistory } from "react-router-native";
 
-const NavbarContainer = styled.View``;
-const LogOutButton = styled.Button``;
+import styles from "../styles";
+
+const NavbarContainer = styled.View`
+  background-color: ${styles.lightShade};
+  align-items: flex-end;
+`;
+
+const LogoutText = styled.Text`
+  padding: 8px;
+`;
 
 function Navbar({
   user,
@@ -36,7 +44,7 @@ function Navbar({
 
   return (
     <NavbarContainer>
-      {user.token ? <LogOutButton title="Log Out" onPress={logout} /> : null}
+      {user.token ? <LogoutText onPress={logout}>Log Out</LogoutText> : null}
     </NavbarContainer>
   );
 }

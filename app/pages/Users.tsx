@@ -4,19 +4,28 @@ import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
 import AppContainer from "../components/AppContainer";
-import PageTitle from "../PageTitle";
-
-import useAccessToken from "../hooks/useAccessToken";
+import PageTitle from "../components/PageTitle";
 
 const Row = styled.View`
   margin-bottom: 8px;
 `;
 
-function Users() {
+function Users({
+  user,
+}: {
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+    expiresAt: string;
+    iat: string;
+    token: string;
+  };
+}) {
   const [users, setUsers] = useState([]);
 
   const history = useHistory();
-  const [user, setToken, clearUser] = useAccessToken();
 
   useEffect(() => {
     async function fetchUsers() {

@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-import styles from "./styles";
+import styles from "../styles";
 
 export default styled.Text`
   font-size: 32px;

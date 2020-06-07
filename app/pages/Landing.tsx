@@ -9,9 +9,7 @@ import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
 
 import AppContainer from "../components/AppContainer";
-import PageTitle from "../PageTitle";
-
-import useAccessToken from "../hooks/useAccessToken";
+import PageTitle from "../components/PageTitle";
 
 const HomePageContainer = styled(AppContainer)`
   justify-content: space-between;
@@ -24,13 +22,28 @@ const ActionContainer = styled.View`
 
 const StyledButton = styled.Button``;
 
-function Landing() {
+function Landing({
+  user,
+}: {
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+    expiresAt: string;
+    iat: string;
+    token: string;
+  };
+}) {
   const history = useHistory();
-  const [user, setToken, clearUser] = useAccessToken();
 
   useEffect(() => {
     if (user.token) {
-      history.push("/home");
+      if (user.role === "admin") {
+        history.push("/users");
+      } else {
+        history.push("/home");
+      }
     }
   }, [user]);
 

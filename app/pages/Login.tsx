@@ -4,17 +4,13 @@
  * @format
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
-import AsyncStorage from "@react-native-community/async-storage";
 import { Button } from "react-native";
-import decode from "jwt-decode";
 
 import AppContainer from "../components/AppContainer";
-import PageTitle from "../PageTitle";
-
-import useAccessToken from "../hooks/useAccessToken";
+import PageTitle from "../components/PageTitle";
 
 import styles from "../styles";
 
@@ -45,12 +41,35 @@ const LoginContent = styled.View`
   justify-content: space-around;
 `;
 
-function App() {
+function Login({
+  user,
+  setToken
+}: {
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+    expiresAt: string;
+    iat: string;
+    token: string;
+  },
+  setToken: (token: string) => Promise<void>
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const history = useHistory();
-  const [user, setToken, clearUser] = useAccessToken();
+
+  useEffect(() => {
+    if (user.token) {
+      if (user.role === "admin") {
+        history.push("/users");
+      } else {
+        history.push("/home");
+      }
+    }
+  }, [user]);
 
   const handleLogin = async () => {
     try {
@@ -69,14 +88,6 @@ function App() {
       if (response.ok) {
         const { token } = await response.json();
         setToken(token);
-
-        const { role } = decode(token);
-
-        if (role === "admin") {
-          history.push("/users");
-        } else {
-          history.push("/home");
-        }
       }
     } catch (err) {
       console.log(err);
@@ -104,4 +115,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;

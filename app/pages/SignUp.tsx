@@ -10,7 +10,7 @@ import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
 import AppContainer from "../components/AppContainer";
-import PageTitle from "../PageTitle";
+import PageTitle from "../components/PageTitle";
 
 import styles from "../styles";
 

@@ -78,6 +78,7 @@ function Users({
 
   async function deleteUser(id: number) {
     try {
+      // TODO: handle admin user authenticated
       if(user.token) {
         const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
           method: "DELETE",

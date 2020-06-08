@@ -94,6 +94,7 @@ export default class UserController extends BaseController {
     }
   }
 
+  // TODO: Authenticate route and check user role admin
   static async deleteUser(
     req: express.Request,
     res: express.Response

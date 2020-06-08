@@ -93,4 +93,28 @@ export default class UserController extends BaseController {
       return res.status(500).end("Could not query database.");
     }
   }
+
+  static async deleteUser(
+    req: express.Request,
+    res: express.Response
+  ): Promise<any> {
+    const { id } = req.body;
+
+    try {
+      const users = await User.query().select().where({ id });
+
+      if (users.length) {
+        const rows = await User.query().where({ id }).del();
+
+        res.send(`Deleted ${rows} user(s) with id ${id}.`);
+      } else {
+        res.status(400).end(`User with id ${id} not found.`)
+      }
+
+    } catch (err) {
+      debug("Error querying database", err);
+
+      return res.status(500).end("Could not query database.");
+    }
+  }
 }

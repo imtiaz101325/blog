@@ -9,4 +9,7 @@ router.get("/", isAuthenticated, UserController.getUsers);
 
 router.post("/", UserController.createUser);
 
+// TODO: add api docs
+router.delete("/", UserController.deleteUser);
+
 export default router;

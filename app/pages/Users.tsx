@@ -57,6 +57,8 @@ function Users({
       if(user.token) {
         const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
           headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
             "Authorization": `Barer ${user.token}`
           }
         });
@@ -68,6 +70,30 @@ function Users({
         }
       } else {
         history.push("/login");
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+  async function deleteUser(id: number) {
+    try {
+      if(user.token) {
+        const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Barer ${user.token}`,
+          },
+          body: JSON.stringify({
+            id
+          }),
+        });
+
+        if (response.ok) {
+          setUsers(users.filter(({ id: userId }) => userId !== id ));
+        }
       }
     } catch(err) {
       console.log(err);
@@ -94,7 +120,7 @@ function Users({
               <CardText>Email: {email}</CardText>
             </CardContent>
             <CardActionContainer>
-              <CardButton title="Delete" onPress={ () => null } color="red" />
+              <CardButton title="Delete" onPress={ () => deleteUser(id) } color="red" />
             </CardActionContainer>
           </CardContainer>)
         }

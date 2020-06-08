@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Text, ScrollView } from "react-native";
+import { ScrollView, Button } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
-const Row = styled.View`
+import styles from "../styles";
+
+const CardContainer = styled.View`
   margin-bottom: 8px;
+  background-color: ${styles.darkShade};
+  padding: 16px;
+`;
+
+const CardContent = styled.View`
+  margin: 4px;
+`;
+
+const CardText = styled.Text`
+  color: ${styles.lightShade};
+`;
+
+const CardActionContainer = styled.View`
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+const CardButton = styled.Button`
+  margin: 0;
 `;
 
 function Users({
@@ -28,30 +49,30 @@ function Users({
   const history = useHistory();
 
   useEffect(() => {
-    async function fetchUsers() {
-      try {
-        if(user.token) {
-          const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
-            headers: {
-              "Authorization": `Barer ${user.token}`
-            }
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-
-            setUsers(data);
-          }
-        } else {
-          history.push("/login");
-        }
-      } catch(err) {
-        console.log(err);
-      }
-    }
-
     fetchUsers();
   }, [user]);
+
+  async function fetchUsers() {
+    try {
+      if(user.token) {
+        const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
+          headers: {
+            "Authorization": `Barer ${user.token}`
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+
+          setUsers(data);
+        }
+      } else {
+        history.push("/login");
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   return (
     <AppContainer>
@@ -60,15 +81,22 @@ function Users({
         {
           users.map(({
             id,
+            name,
             username,
             role,
             email,
-          }) => <Row key={ id }>
-            <Text>ID: {id}</Text>
-            <Text>Username: {username}</Text>
-            <Text>Role: {role}</Text>
-            <Text>Email: {email}</Text>
-          </Row>)
+          }) => <CardContainer key={ id }>
+            <CardContent>
+              <CardText>{name}</CardText>
+              <CardText>ID: {id}</CardText>
+              <CardText>Username: {username}</CardText>
+              <CardText>Role: {role}</CardText>
+              <CardText>Email: {email}</CardText>
+            </CardContent>
+            <CardActionContainer>
+              <CardButton title="Delete" onPress={ () => null } color="red" />
+            </CardActionContainer>
+          </CardContainer>)
         }
       </ScrollView>
     </AppContainer>

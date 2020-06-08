@@ -26,9 +26,12 @@ const SignUpInput = styled.TextInput`
   color: ${styles.darkShade};
 `;
 
-const SignUpContent = styled.View`
+const SignUpContent = styled.ScrollView`
   height: 80%;
-  justify-content: space-around;
+`;
+
+const SignUpRows = styled.View`
+  margin-bottom: 16px;
 `;
 
 function SignUp() {
@@ -71,48 +74,48 @@ function SignUp() {
     <SignUpContainer>
       <PageTitle>Sign Up</PageTitle>
       <SignUpContent>
-        <View>
+        <SignUpRows>
           <Text>First Name</Text>
           <SignUpInput
             value={firstName}
             onChangeText={(value) => setFirstName(value)}
           />
-        </View>
-        <View>
+        </SignUpRows>
+        <SignUpRows>
           <Text>Last Name</Text>
           <SignUpInput
             value={lastName}
             onChangeText={(value) => setLastName(value)}
           />
-        </View>
-        <View>
+        </SignUpRows>
+        <SignUpRows>
           <Text>Username</Text>
           <SignUpInput
             value={username}
             onChangeText={(value) => setUsername(value)}
           />
-        </View>
-        <View>
+        </SignUpRows>
+        <SignUpRows>
           <Text>About</Text>
           <SignUpInput
             value={about}
             onChangeText={(value) => setAbout(value)}
           />
-        </View>
-        <View>
+        </SignUpRows>
+        <SignUpRows>
           <Text>Email</Text>
           <SignUpInput
             value={email}
             onChangeText={(value) => setEmail(value)}
           />
-        </View>
-        <View>
+        </SignUpRows>
+        <SignUpRows>
           <Text>Password</Text>
           <SignUpInput
             value={password}
             onChangeText={(value) => setPassword(value)}
           />
-        </View>
+        </SignUpRows>
         <Button title="Sign Up" onPress={handleSignUp} />
       </SignUpContent>
     </SignUpContainer>

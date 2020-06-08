@@ -15,6 +15,7 @@ import PageTitle from "../components/PageTitle";
 import styles from "../styles";
 
 const LoginContainer = styled(AppContainer)`
+  height: 90%;
   justify-content: space-between;
 `;
 
@@ -109,7 +110,7 @@ function Login({
           value={password}
           onChangeText={(value) => setPassword(value)}
         />
-        <Button title="Login" onPress={handleLogin} />
+        <Button title="Login" onPress={handleLogin} color={ styles.darkShade }/>
       </LoginContent>
     </LoginContainer>
   );

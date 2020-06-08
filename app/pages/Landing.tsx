@@ -7,20 +7,22 @@
 import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
+import { Button } from "react-native";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
+import styles from "../styles";
+
 const HomePageContainer = styled(AppContainer)`
+  height: 90%;
   justify-content: space-between;
 `;
 
 const ActionContainer = styled.View`
   justify-content: space-around;
-  height: 80px;
+  height: 90px;
 `;
-
-const StyledButton = styled.Button``;
 
 function Landing({
   user,
@@ -51,8 +53,8 @@ function Landing({
     <HomePageContainer>
       <PageTitle>Blog</PageTitle>
       <ActionContainer>
-        <StyledButton title="Login" onPress={() => history.push("/login")} />
-        <StyledButton title="Sign Up" onPress={() => history.push("/signup")} />
+        <Button title="Login" onPress={() => history.push("/login")} color={ styles.darkShade } />
+        <Button title="Sign Up" onPress={() => history.push("/signup")} color={ styles.darkShade } />
       </ActionContainer>
     </HomePageContainer>
   );

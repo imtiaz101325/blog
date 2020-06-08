@@ -1,17 +1,19 @@
 import React from "react";
-import styled from "styled-components/native";
-import AsyncStorage from "@react-native-community/async-storage";
+import styled from "styled-components/native";  
 import { useHistory } from "react-router-native";
 
 import styles from "../styles";
 
 const NavbarContainer = styled.View`
-  background-color: ${styles.lightShade};
+  background-color: ${styles.darkShade};
   align-items: flex-end;
+  justify-content: center;
+  height: 48px;
 `;
 
 const LogoutText = styled.Text`
   padding: 8px;
+  color: ${styles.lightShade};
 `;
 
 function Navbar({

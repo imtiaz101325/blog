@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Button } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
@@ -12,6 +12,7 @@ const CardContainer = styled.View`
   margin-bottom: 8px;
   background-color: ${styles.darkShade};
   padding: 16px;
+  position: relative;
 `;
 
 const CardContent = styled.View`
@@ -30,6 +31,27 @@ const CardActionContainer = styled.View`
 const CardButton = styled.Button`
   margin: 0;
 `;
+
+const CardLink = styled.Text`
+  color: red;
+  text-decoration: underline;
+`;
+
+const AdminBadgeContainer = styled.View`
+  position: absolute;
+  top: 8;
+  right: 8;
+  background-color: red;
+  padding: 2px;
+`;
+
+function AdminBadge() {
+  return (
+    <AdminBadgeContainer>
+      <Text>Admin</Text>
+    </AdminBadgeContainer>
+  );
+}
 
 function Users({
   user,
@@ -113,12 +135,14 @@ function Users({
             role,
             email,
           }) => <CardContainer key={ id }>
+            { role === "admin" && <AdminBadge /> }
             <CardContent>
               <CardText>{name}</CardText>
               <CardText>ID: {id}</CardText>
               <CardText>Username: {username}</CardText>
               <CardText>Role: {role}</CardText>
               <CardText>Email: {email}</CardText>
+              { role !== "admin" && <CardLink>make admin</CardLink> }
             </CardContent>
             <CardActionContainer>
               <CardButton title="Delete" onPress={ () => deleteUser(id) } color="red" />

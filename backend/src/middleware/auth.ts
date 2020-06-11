@@ -15,11 +15,13 @@ export default function isAuthenticated(
 
     jwt.verify(token, secret, (err, user) => {
       if (err) {
-        return res.status(403).end("Could not verify access token.");
+        return res.status(403).send({
+          error: "Could not verify access token.",
+        });
       }
 
       if (user && new Date() > new Date((<IUser>user).expiresAt)) {
-        return res.status(401).end("Token Expired.");
+        return res.status(401).send("Token Expired.");
       }
 
       req.user = <IUser>user;
@@ -28,6 +30,8 @@ export default function isAuthenticated(
   } else {
     res
       .status(401)
-      .end("Please supply authentication token to access protected route.");
+      .send({
+        error: "Please supply authentication token to access protected route.",
+      });
   }
 }

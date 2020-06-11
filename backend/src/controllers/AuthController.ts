@@ -69,12 +69,16 @@ export default class AuthController extends BaseController {
           token,
         });
       } else {
-        return res.status(401).end("Incorrect username or password");
+        return res.status(401).send({
+          error: "Incorrect username or password.",
+        });
       }
     } catch (err) {
       debug("Error querying user table", err);
 
-      return res.status(500).end("Could not query database.");
+      return res.status(500).send({
+        error: "Could not query database.",
+      });
     }
   }
 }

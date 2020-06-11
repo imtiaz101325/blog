@@ -31,12 +31,16 @@ export default class UserController extends BaseController {
       } catch (err) {
         debug("Error fetching users.", err);
 
-        return res.status(400).end("Could not process request.");
+        return res.status(400).send({
+          error: "Could not process request.",
+        });
       }
     } else {
       debug("Either user is not authenticated or user is not a admin.");
 
-      return res.status(500).end("User not an admin.");
+      return res.status(500).send({
+        error: "User not an admin.",
+      });
     }
   }
 
@@ -76,13 +80,17 @@ export default class UserController extends BaseController {
         } catch (err) {
           debug(`Error fetching user with id ${id}`, err);
 
-          return res.status(400).end("Could not process request.");
+          return res.status(400).send({
+            error: "Could not process request.",
+          });
         }
       }
     } else {
       debug("User does not appear to be authenticated.");
 
-      return res.status(500).end("Server error.");
+      return res.status(500).send({
+        error: "Server error.",
+      });
     }
   }
 
@@ -95,7 +103,7 @@ export default class UserController extends BaseController {
     if (!username || !email || !password) {
       return res
         .status(400)
-        .end("Request must contain username, email and password");
+        .send("Request must contain username, email and password");
     }
 
     try {
@@ -109,7 +117,9 @@ export default class UserController extends BaseController {
         });
 
       if (users.length) {
-        return res.status(401).end("The username or email already exists");
+        return res.status(401).send({
+          error: "The username or email already exists",
+        });
       }
 
       const { salt, hash } = generateHash(password);
@@ -137,12 +147,16 @@ export default class UserController extends BaseController {
       } catch (err) {
         debug("Error inserting User into database", err);
 
-        return res.status(500).end("Could not create database entry.");
+        return res.status(500).send({
+          error: "Could not create database entry.",
+        });
       }
     } catch (err) {
       debug("Error querying database", err);
 
-      return res.status(500).end("Could not query database.");
+      return res.status(500).send({
+        error: "Could not query database.",
+      });
     }
   }
 
@@ -161,12 +175,16 @@ export default class UserController extends BaseController {
 
         res.send(`Deleted ${rows} user(s) with id ${id}.`);
       } else {
-        res.status(400).end(`User with id ${id} not found.`);
+        res.status(400).send({
+          error: `User with id ${id} not found.`,
+        });
       }
     } catch (err) {
       debug("Error querying database", err);
 
-      return res.status(500).end("Could not query database.");
+      return res.status(500).send({
+        error: "Could not query database.",
+      });
     }
   }
 
@@ -214,7 +232,9 @@ export default class UserController extends BaseController {
       } catch (err) {
         debug("Error updating database", err);
 
-        return res.status(500).end("Could not update database.");
+        return res.status(500).send({
+          error: "Could not update database.",
+        });
       }
     }
 
@@ -222,7 +242,9 @@ export default class UserController extends BaseController {
     } catch (err) {
       debug("Error querying database", err);
 
-      return res.status(500).end("Could not query database.");
+      return res.status(500).send({
+        error: "Could not query database.",
+      });
     }
   }
 }

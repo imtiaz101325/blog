@@ -26,9 +26,7 @@ const SignUpInput = styled.TextInput`
   color: ${styles.darkShade};
 `;
 
-const SignUpContent = styled.ScrollView`
-  height: 80%;
-`;
+const SignUpContent = styled.ScrollView``;
 
 const SignUpRows = styled.View`
   margin-bottom: 16px;
@@ -41,6 +39,7 @@ function SignUp() {
   const [about, setAbout] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const history = useHistory();
 
@@ -112,11 +111,24 @@ function SignUp() {
         <SignUpRows>
           <Text>Password</Text>
           <SignUpInput
+            secureTextEntry
             value={password}
             onChangeText={(value) => setPassword(value)}
           />
         </SignUpRows>
-        <Button title="Sign Up" onPress={handleSignUp} />
+        <SignUpRows>
+          <Text>Confirm password</Text>
+          <SignUpInput
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={(value) => setConfirmPassword(value)}
+          />
+        </SignUpRows>
+        <Button
+          title="Sign Up"
+          onPress={handleSignUp}
+          color={styles.darkShade}
+        />
       </SignUpContent>
     </SignUpContainer>
   );

@@ -4,6 +4,6 @@ import styles from "../styles";
 
 export default styled.View`
   padding: 16px;
-  height: 100%;
+  flex: 1;
   background-color: ${styles.lightShade};
 `;

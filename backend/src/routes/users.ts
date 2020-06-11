@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get("/", isAuthenticated, UserController.getUsers);
 
+router.get("/:id/", isAuthenticated, UserController.getUser);
+
 router.post("/", UserController.createUser);
 
 // TODO: add api docs

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";  
 import { useHistory } from "react-router-native";
 
@@ -33,11 +33,16 @@ function Navbar({
 }) {
   const history = useHistory();
 
+  useEffect(() => {
+    if (!user.token) {
+      history.push("/");
+    }
+  }, [user]);
+
   async function logout() {
     if (user.token) {
       try {
         handleLogout();
-        history.push("/");
       } catch (err) {
         console.log(err);
       }

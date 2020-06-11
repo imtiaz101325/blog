@@ -109,9 +109,64 @@ export default class UserController extends BaseController {
 
         res.send(`Deleted ${rows} user(s) with id ${id}.`);
       } else {
-        res.status(400).end(`User with id ${id} not found.`)
+        res.status(400).end(`User with id ${id} not found.`);
       }
+    } catch (err) {
+      debug("Error querying database", err);
 
+      return res.status(500).end("Could not query database.");
+    }
+  }
+
+  static async updateUser(
+    req: express.Request,
+    res: express.Response
+  ): Promise<any> {
+    const id = req.params.id;
+
+    const {
+      firstName,
+      lastName,
+      username,
+      about,
+      status,
+      isAdmin,
+      isAuthor,
+      email,
+      password,
+    } = req.body;
+
+    const fields: {
+      [key: string]: string | boolean;
+    } = {
+      firstName,
+      lastName,
+      username,
+      about,
+      status,
+      isAdmin,
+      isAuthor,
+      email,
+      password,
+    };
+
+    if (req.method === "PATCH") {
+      const data = Object.keys(fields)
+        .filter((key) => Boolean(fields[key]))
+        .reduce((acc, key) => ({ ...acc, [key]: fields[key] }), {});
+
+      try {
+        await User.query().where({ id }).update(data);
+
+        res.send("Successfully updated user.");
+      } catch (err) {
+        debug("Error updating database", err);
+  
+        return res.status(500).end("Could not update database.");
+      }
+    }
+
+    try {
     } catch (err) {
       debug("Error querying database", err);
 

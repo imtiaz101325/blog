@@ -39,8 +39,8 @@ const CardLink = styled.Text`
 
 const AdminBadgeContainer = styled.View`
   position: absolute;
-  top: 8;
-  right: 8;
+  top: 8px;
+  right: 8px;
   background-color: red;
   padding: 2px;
 `;
@@ -98,6 +98,32 @@ function Users({
     }
   }
 
+  async function handleMakeAdmin(id: number) {
+    try {
+      if(user.token) {
+        const response = await fetch(`http://0.0.0.0:8000/api/v1/users/${id}/`, {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Barer ${user.token}`
+          },
+          body: JSON.stringify({
+            isAdmin: true
+          }),
+        });
+
+        if (response.ok) {
+          fetchUsers();
+        }
+      } else {
+        history.push("/login");
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   async function deleteUser(id: number) {
     try {
       // TODO: handle admin user authenticated
@@ -142,7 +168,7 @@ function Users({
               <CardText>Username: {username}</CardText>
               <CardText>Role: {role}</CardText>
               <CardText>Email: {email}</CardText>
-              { role !== "admin" && <CardLink>make admin</CardLink> }
+              { role !== "admin" && <CardLink onPress={ () => handleMakeAdmin(id) }>make admin</CardLink> }
             </CardContent>
             <CardActionContainer>
               <CardButton title="Delete" onPress={ () => deleteUser(id) } color="red" />

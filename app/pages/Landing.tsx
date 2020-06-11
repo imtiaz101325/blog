@@ -53,8 +53,16 @@ function Landing({
     <HomePageContainer>
       <PageTitle>Blog</PageTitle>
       <ActionContainer>
-        <Button title="Login" onPress={() => history.push("/login")} color={ styles.darkShade } />
-        <Button title="Sign Up" onPress={() => history.push("/signup")} color={ styles.darkShade } />
+        <Button
+          title="Login"
+          onPress={() => history.push("/login")}
+          color={styles.darkShade}
+        />
+        <Button
+          title="Sign Up"
+          onPress={() => history.push("/signup")}
+          color={styles.darkShade}
+        />
       </ActionContainer>
     </HomePageContainer>
   );

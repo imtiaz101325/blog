@@ -227,7 +227,6 @@ export default class UserController extends BaseController {
         role === "admin" ||
         (role !== "admin" && req.user.id === parseInt(id, 10))
       ) {
-
         const {
           firstName,
           lastName,

@@ -65,7 +65,7 @@ function Routes() {
         handleSetUser(token);
       } else {
         await AsyncStorage.removeItem("@access_token");
-        setUser(initialState)
+        setUser(initialState);
       }
     } catch (err) {
       console.log(err);
@@ -87,10 +87,10 @@ function Routes() {
 
   return (
     <>
-      <Navbar user={user} handleLogout={ handleLogout } />
+      <Navbar user={user} handleLogout={handleLogout} />
       <Switch>
         <Route path="/login">
-          <Login user={user} setToken={ setToken } />
+          <Login user={user} setToken={setToken} />
         </Route>
         <Route path="/signup">
           <SignUp />

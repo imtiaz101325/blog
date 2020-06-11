@@ -28,10 +28,8 @@ export default function isAuthenticated(
       next();
     });
   } else {
-    res
-      .status(401)
-      .send({
-        error: "Please supply authentication token to access protected route.",
-      });
+    res.status(401).send({
+      error: "Please supply authentication token to access protected route.",
+    });
   }
 }

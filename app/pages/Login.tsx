@@ -44,7 +44,7 @@ const LoginContent = styled.View`
 
 function Login({
   user,
-  setToken
+  setToken,
 }: {
   user: {
     id: number;
@@ -54,8 +54,8 @@ function Login({
     expiresAt: string;
     iat: string;
     token: string;
-  },
-  setToken: (token: string) => Promise<void>
+  };
+  setToken: (token: string) => Promise<void>;
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -110,7 +110,7 @@ function Login({
           value={password}
           onChangeText={(value) => setPassword(value)}
         />
-        <Button title="Login" onPress={handleLogin} color={ styles.darkShade }/>
+        <Button title="Login" onPress={handleLogin} color={styles.darkShade} />
       </LoginContent>
     </LoginContainer>
   );

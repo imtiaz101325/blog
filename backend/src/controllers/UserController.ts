@@ -10,27 +10,79 @@ export default class UserController extends BaseController {
     req: express.Request,
     res: express.Response
   ): Promise<any> {
-    try {
-      const users = await User.query().select(
-        "id",
-        "firstName",
-        "lastName",
-        "username",
-        "about",
-        "lastLogin",
-        "status",
-        "isAdmin",
-        "isAuthor",
-        "email",
-        "createdAt",
-        "updatedAt"
-      );
+    if (req.user && req.user.role === "admin") {
+      try {
+        const users = await User.query().select(
+          "id",
+          "firstName",
+          "lastName",
+          "username",
+          "about",
+          "lastLogin",
+          "status",
+          "isAdmin",
+          "isAuthor",
+          "email",
+          "createdAt",
+          "updatedAt"
+        );
 
-      return res.send(users);
-    } catch (err) {
-      debug("Error fetching users: ", err);
+        return res.send(users);
+      } catch (err) {
+        debug("Error fetching users.", err);
 
-      return res.status(400).end("Could not process request.");
+        return res.status(400).end("Could not process request.");
+      }
+    } else {
+      debug("Either user is not authenticated or user is not a admin.");
+
+      return res.status(500).end("User not an admin.");
+    }
+  }
+
+  static async getUser(
+    req: express.Request,
+    res: express.Response
+  ): Promise<any> {
+    const id = req.params.id;
+
+    if (req.user) {
+      const { role } = req.user;
+
+      if (
+        role === "admin" ||
+        (role !== "admin" && req.user.id === parseInt(id, 10))
+      ) {
+        try {
+          const user = await User.query()
+            .select(
+              "id",
+              "firstName",
+              "lastName",
+              "username",
+              "about",
+              "lastLogin",
+              "status",
+              "isAdmin",
+              "isAuthor",
+              "email",
+              "createdAt",
+              "updatedAt"
+            )
+            .where({ id })
+            .first();
+
+          return res.send(user);
+        } catch (err) {
+          debug(`Error fetching user with id ${id}`, err);
+
+          return res.status(400).end("Could not process request.");
+        }
+      }
+    } else {
+      debug("User does not appear to be authenticated.");
+
+      return res.status(500).end("Server error.");
     }
   }
 
@@ -161,7 +213,7 @@ export default class UserController extends BaseController {
         res.send("Successfully updated user.");
       } catch (err) {
         debug("Error updating database", err);
-  
+
         return res.status(500).end("Could not update database.");
       }
     }

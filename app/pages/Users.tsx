@@ -126,18 +126,14 @@ function Users({
 
   async function deleteUser(id: number) {
     try {
-      // TODO: handle admin user authenticated
-      if(user.token) {
-        const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
+      if(user.token && user.role === "admin") {
+        const response = await fetch(`http://0.0.0.0:8000/api/v1/users/${id}`, {
           method: "DELETE",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
             "Authorization": `Barer ${user.token}`,
           },
-          body: JSON.stringify({
-            id
-          }),
         });
 
         if (response.ok) {

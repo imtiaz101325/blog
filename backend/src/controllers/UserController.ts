@@ -252,12 +252,8 @@ export default class UserController extends BaseController {
         };
 
         if (req.method === "PATCH") {
-          const data = Object.keys(fields)
-            .filter((key) => Boolean(fields[key]))
-            .reduce((acc, key) => ({ ...acc, [key]: fields[key] }), {});
-
           try {
-            await User.query().where({ id }).update(data);
+            await User.query().where({ id }).update(fields);
 
             res.send("Successfully updated user.");
           } catch (err) {

@@ -16,6 +16,7 @@ import SignUp from "./pages/SignUp";
 import Users from "./pages/Users";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import EditUser from "./pages/EditUser";
 
 const initialState = {
   id: -1,
@@ -30,6 +31,18 @@ const initialState = {
 function Routes() {
   const history = useHistory();
   const [user, setUser] = useState(initialState);
+
+  const [draftUser, setDraftUser] = useState({
+    id: -1,
+    firstName: "",
+    lastName: "",
+    username: "",
+    about: "",
+    status: "",
+    isAdmin: false,
+    isAuthor: false,
+    email: "",
+  });
 
   function handleSetUser(token: string) {
     const payload: {
@@ -76,6 +89,10 @@ function Routes() {
     setToken("");
   }
 
+  function handleEditUser(user: any) {
+    setDraftUser(user);
+  }
+
   useBackHandler(() => {
     history.goBack();
     return true;
@@ -85,6 +102,12 @@ function Routes() {
     getToken();
   }, []);
 
+  useEffect(() => {
+    if (draftUser.username) {
+      history.push("/edit-user");
+    }
+  }, [draftUser]);
+
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
@@ -92,11 +115,14 @@ function Routes() {
         <Route path="/login">
           <Login user={user} setToken={setToken} />
         </Route>
-        <Route path="/signup">
+        <Route path="/sign-up">
           <SignUp />
         </Route>
         <Route path="/users">
-          <Users user={user} />
+          <Users user={user} editUser={handleEditUser} />
+        </Route>
+        <Route path="/edit-user">
+          <EditUser user={user} draftUser={draftUser} />
         </Route>
         <Route path="/home">
           <Home />

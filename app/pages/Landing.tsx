@@ -60,7 +60,7 @@ function Landing({
         />
         <Button
           title="Sign Up"
-          onPress={() => history.push("/signup")}
+          onPress={() => history.push("/sign-up")}
           color={styles.darkShade}
         />
       </ActionContainer>

@@ -236,7 +236,6 @@ export default class UserController extends BaseController {
           isAdmin,
           isAuthor,
           email,
-          password,
         } = req.body;
 
         const fields: {
@@ -250,7 +249,6 @@ export default class UserController extends BaseController {
           isAdmin,
           isAuthor,
           email,
-          password,
         };
 
         if (req.method === "PATCH") {

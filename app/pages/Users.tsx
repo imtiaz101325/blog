@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Text, Button, ButtonProps } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
@@ -28,9 +28,17 @@ const CardActionContainer = styled.View`
   justify-content: flex-end;
 `;
 
-const CardButton = styled.Button`
-  margin: 0;
+const CardButtonWrapper = styled.View`
+  margin: 4px;
 `;
+
+function CardButton(props: ButtonProps) {
+  return (
+    <CardButtonWrapper>
+      <Button {...props} />
+    </CardButtonWrapper>
+  );
+}
 
 const CardLink = styled.Text`
   color: red;
@@ -55,6 +63,7 @@ function AdminBadge() {
 
 function Users({
   user,
+  editUser,
 }: {
   user: {
     id: number;
@@ -65,6 +74,7 @@ function Users({
     iat: string;
     token: string;
   };
+  editUser: (user: any) => void;
 }) {
   const [users, setUsers] = useState([]);
 
@@ -76,13 +86,13 @@ function Users({
 
   async function fetchUsers() {
     try {
-      if(user.token) {
+      if (user.token) {
         const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            "Authorization": `Barer ${user.token}`
-          }
+            Authorization: `Barer ${user.token}`,
+          },
         });
 
         if (response.ok) {
@@ -93,25 +103,28 @@ function Users({
       } else {
         history.push("/login");
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
 
   async function handleMakeAdmin(id: number) {
     try {
-      if(user.token) {
-        const response = await fetch(`http://0.0.0.0:8000/api/v1/users/${id}/`, {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Authorization": `Barer ${user.token}`
+      if (user.token) {
+        const response = await fetch(
+          `http://0.0.0.0:8000/api/v1/users/${id}/`,
+          {
+            method: "PATCH",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Barer ${user.token}`,
+            },
+            body: JSON.stringify({
+              isAdmin: true,
+            }),
           },
-          body: JSON.stringify({
-            isAdmin: true
-          }),
-        });
+        );
 
         if (response.ok) {
           fetchUsers();
@@ -119,28 +132,28 @@ function Users({
       } else {
         history.push("/login");
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
 
   async function deleteUser(id: number) {
     try {
-      if(user.token && user.role === "admin") {
+      if (user.token && user.role === "admin") {
         const response = await fetch(`http://0.0.0.0:8000/api/v1/users/${id}`, {
           method: "DELETE",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            "Authorization": `Barer ${user.token}`,
+            Authorization: `Barer ${user.token}`,
           },
         });
 
         if (response.ok) {
-          setUsers(users.filter(({ id: userId }) => userId !== id ));
+          setUsers(users.filter(({ id: userId }) => userId !== id));
         }
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -149,31 +162,65 @@ function Users({
     <AppContainer>
       <ScrollView>
         <PageTitle>Users</PageTitle>
-        {
-          users.map(({
+        {users.map((user) => {
+          const {
             id,
-            name,
-            username,
             role,
+            name,
+            firstName,
+            lastName,
+            username,
+            about,
+            status,
+            isAdmin,
+            isAuthor,
             email,
-          }) => <CardContainer key={ id }>
-            { role === "admin" && <AdminBadge /> }
-            <CardContent>
-              <CardText>{name}</CardText>
-              <CardText>ID: {id}</CardText>
-              <CardText>Username: {username}</CardText>
-              <CardText>Role: {role}</CardText>
-              <CardText>Email: {email}</CardText>
-              { role !== "admin" && <CardLink onPress={ () => handleMakeAdmin(id) }>make admin</CardLink> }
-            </CardContent>
-            <CardActionContainer>
-              <CardButton title="Delete" onPress={ () => deleteUser(id) } color="red" />
-            </CardActionContainer>
-          </CardContainer>)
-        }
+          } = user;
+
+          return (
+            <CardContainer key={id}>
+              {role === "admin" && <AdminBadge />}
+              <CardContent>
+                <CardText>{name}</CardText>
+                <CardText>ID: {id}</CardText>
+                <CardText>Username: {username}</CardText>
+                <CardText>Role: {role}</CardText>
+                <CardText>Email: {email}</CardText>
+                {role !== "admin" && (
+                  <CardLink onPress={() => handleMakeAdmin(id)}>
+                    make admin
+                  </CardLink>
+                )}
+              </CardContent>
+              <CardActionContainer>
+                <CardButton
+                  title="Edit"
+                  onPress={() =>
+                    editUser({
+                      id,
+                      firstName,
+                      lastName,
+                      username,
+                      about,
+                      status,
+                      isAdmin,
+                      isAuthor,
+                      email,
+                    })
+                  }
+                />
+                <CardButton
+                  title="Delete"
+                  onPress={() => deleteUser(id)}
+                  color="red"
+                />
+              </CardActionContainer>
+            </CardContainer>
+          );
+        })}
       </ScrollView>
     </AppContainer>
   );
-};
+}
 
 export default Users;

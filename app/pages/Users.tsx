@@ -162,62 +162,66 @@ function Users({
     <AppContainer>
       <ScrollView>
         <PageTitle>Users</PageTitle>
-        {users.map((user) => {
-          const {
-            id,
-            role,
-            name,
-            firstName,
-            lastName,
-            username,
-            about,
-            status,
-            isAdmin,
-            isAuthor,
-            email,
-          } = user;
+        {users
+          .sort(({ id: _idA }, { id: _idB }) => {
+            return _idA - _idB;
+          })
+          .map((user) => {
+            const {
+              id,
+              role,
+              name,
+              firstName,
+              lastName,
+              username,
+              about,
+              status,
+              isAdmin,
+              isAuthor,
+              email,
+            } = user;
 
-          return (
-            <CardContainer key={id}>
-              {role === "admin" && <AdminBadge />}
-              <CardContent>
-                <CardText>{name}</CardText>
-                <CardText>ID: {id}</CardText>
-                <CardText>Username: {username}</CardText>
-                <CardText>Role: {role}</CardText>
-                <CardText>Email: {email}</CardText>
-                {role !== "admin" && (
-                  <CardLink onPress={() => handleMakeAdmin(id)}>
-                    make admin
-                  </CardLink>
-                )}
-              </CardContent>
-              <CardActionContainer>
-                <CardButton
-                  title="Edit"
-                  onPress={() =>
-                    editUser({
-                      id,
-                      firstName,
-                      lastName,
-                      username,
-                      about,
-                      status,
-                      isAdmin,
-                      isAuthor,
-                      email,
-                    })
-                  }
-                />
-                <CardButton
-                  title="Delete"
-                  onPress={() => deleteUser(id)}
-                  color="red"
-                />
-              </CardActionContainer>
-            </CardContainer>
-          );
-        })}
+            return (
+              <CardContainer key={id}>
+                {role === "admin" && <AdminBadge />}
+                <CardContent>
+                  <CardText>{name}</CardText>
+                  <CardText>ID: {id}</CardText>
+                  <CardText>Username: {username}</CardText>
+                  <CardText>Role: {role}</CardText>
+                  <CardText>Email: {email}</CardText>
+                  {role !== "admin" && (
+                    <CardLink onPress={() => handleMakeAdmin(id)}>
+                      make admin
+                    </CardLink>
+                  )}
+                </CardContent>
+                <CardActionContainer>
+                  <CardButton
+                    title="Edit"
+                    onPress={() =>
+                      editUser({
+                        id,
+                        firstName,
+                        lastName,
+                        username,
+                        about,
+                        status,
+                        isAdmin,
+                        isAuthor,
+                        email,
+                      })
+                    }
+                  />
+                  <CardButton
+                    title="Delete"
+                    onPress={() => deleteUser(id)}
+                    color="red"
+                  />
+                </CardActionContainer>
+              </CardContainer>
+            );
+          })}
       </ScrollView>
     </AppContainer>
   );

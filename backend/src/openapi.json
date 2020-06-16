@@ -24,7 +24,7 @@
           "user"
         ],
         "summary": "Get all users",
-        "operationId": "getUsrs",
+        "operationId": "getUsers",
         "security": [
           {
             "bearerAuth": []
@@ -45,26 +45,13 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "Please supply authentication token to access protected route."
-                }
-              }
-            }
+            "$ref": "#/components/responses/AuthNoToken"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "Could not verify access token."
-                }
-              }
-            }
+            "$ref": "#/components/responses/AuthTokenError"
+          },
+          "500": {
+            "$ref": "#/components/responses/CouldNotQueryDatabase"
           }
         }
       },
@@ -119,10 +106,15 @@
           "400": {
             "description": "Bad Request",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "Request must contain username, email and password"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Request must contain username, email and password"
+                    }
+                  }
                 }
               }
             }
@@ -130,24 +122,183 @@
           "401": {
             "description": "Unauthorized",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "The username or email already exists"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "The username or email already exists"
+                    }
+                  }
                 }
               }
             }
           },
           "500": {
-            "description": "Internal Server Error",
+            "$ref": "#/components/responses/CouldNotQueryDatabase"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user with ID",
+        "operationId": "getUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "example": 7
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "Could not query database."
+                  "$ref": "#/components/schemas/AllUsers"
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthNoToken"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthTokenError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete user with ID",
+        "operationId": "deleteUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "example": 7
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": "Deleted 1 user(s) with id 7."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthNoToken"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthTokenError"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User with id 7 not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/CouldNotQueryDatabase"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user with ID",
+        "operationId": "updateUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "example": 7
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "object",
+                      "example": "Successfully updated user with id 7."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthNoToken"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthTokenError"
+          },
+          "500": {
+            "$ref": "#/components/responses/CouldNotQueryDatabase"
           }
         }
       }
@@ -199,10 +350,15 @@
           "401": {
             "description": "Unauthorized",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "Incorrect username or password"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Incorrect username or password."
+                    }
+                  }
                 }
               }
             }
@@ -210,10 +366,15 @@
           "500": {
             "description": "Internal Server Error",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "Could not query database."
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Could not query database."
+                    }
+                  }
                 }
               }
             }
@@ -231,6 +392,86 @@
       }
     },
     "responses": {
+      "AuthTokenError": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Could not verify access token."
+                }
+              }
+            }
+          }
+        }
+      },
+      "AuthTokenExpired": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Token Expired."
+                }
+              }
+            }
+          }
+        }
+      },
+      "AuthNoToken": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Please supply authentication token to access protected route."
+                }
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Could not process request."
+                }
+              }
+            }
+          }
+        }
+      },
+      "CouldNotQueryDatabase": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Could not query database."
+                }
+              }
+            }
+          }
+        }
+      },
       "Success": {
         "description": "OK",
         "content": {

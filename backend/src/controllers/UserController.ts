@@ -31,8 +31,8 @@ export default class UserController extends BaseController {
       } catch (err) {
         debug("Error fetching users: ", err);
 
-        return res.status(400).send({
-          error: "Could not process request.",
+        return res.status(500).send({
+          error: "Could not query database.",
         });
       }
     } else {
@@ -81,7 +81,7 @@ export default class UserController extends BaseController {
           debug(`Error fetching user with id ${id}: `, err);
 
           return res.status(500).send({
-            error: "Could not process request.",
+            error: "Could not query database.",
           });
         }
       } else {
@@ -185,9 +185,11 @@ export default class UserController extends BaseController {
           if (users.length) {
             const rows = await User.query().where({ id }).del();
 
-            res.send(`Deleted ${rows} user(s) with id ${id}.`);
+            res.send({
+              success: `Deleted ${rows} user(s) with id ${id}.`,
+            });
           } else {
-            res.status(400).send({
+            res.status(404).send({
               error: `User with id ${id} not found.`,
             });
           }
@@ -255,12 +257,14 @@ export default class UserController extends BaseController {
           try {
             await User.query().where({ id }).update(fields);
 
-            res.send("Successfully updated user.");
+            res.send({
+              success: `Successfully updated user with id ${id}.`
+            });
           } catch (err) {
             debug("Error updating database: ", err);
 
             return res.status(500).send({
-              error: "Could not update database.",
+              error: "Could not query database.",
             });
           }
         }

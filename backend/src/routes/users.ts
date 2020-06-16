@@ -11,7 +11,6 @@ router.get("/:id/", isAuthenticated, UserController.getUser);
 
 router.post("/", UserController.createUser);
 
-// TODO: add api docs
 router.delete("/:id/", isAuthenticated, UserController.deleteUser);
 
 router.patch("/:id/", isAuthenticated, UserController.updateUser);

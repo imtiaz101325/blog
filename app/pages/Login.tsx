@@ -13,14 +13,11 @@ import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
 import styles from "../styles";
+import api from "../api";
 
 const LoginContainer = styled(AppContainer)`
   height: 90%;
   justify-content: space-between;
-`;
-
-const LightText = styled.Text`
-  color: ${styles.lightShade};
 `;
 
 const DarkText = styled.Text`
@@ -72,28 +69,18 @@ function Login({
     }
   }, [user]);
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch("http://0.0.0.0:8000/api/v1/auth", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-
-      if (response.ok) {
-        const { token } = await response.json();
-        setToken(token);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const handleLogin = () =>
+    api(
+      "auth",
+      "POST",
+      ({ token }) => setToken(token),
+      ({ error }) => console.log(error),
+      undefined,
+      {
+        username,
+        password,
+      },
+    );
 
   return (
     <LoginContainer>

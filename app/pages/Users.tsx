@@ -7,6 +7,7 @@ import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
 import styles from "../styles";
+import api from "../api";
 
 const CardContainer = styled.View`
   margin-bottom: 8px;
@@ -84,77 +85,46 @@ function Users({
     fetchUsers();
   }, [user]);
 
-  async function fetchUsers() {
-    try {
-      if (user.token) {
-        const response = await fetch("http://0.0.0.0:8000/api/v1/users", {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Barer ${user.token}`,
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-
-          setUsers(data);
-        }
-      } else {
-        history.push("/login");
-      }
-    } catch (err) {
-      console.log(err);
+  function fetchUsers() {
+    if (user.token) {
+      api(
+        "users",
+        "GET",
+        (data) => setUsers(data),
+        ({ error }) => console.log(error),
+        user.token,
+      );
+    } else {
+      history.push("/login");
     }
   }
 
-  async function handleMakeAdmin(id: number) {
-    try {
-      if (user.token) {
-        const response = await fetch(
-          `http://0.0.0.0:8000/api/v1/users/${id}/`,
-          {
-            method: "PATCH",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Barer ${user.token}`,
-            },
-            body: JSON.stringify({
-              isAdmin: true,
-            }),
-          },
-        );
-
-        if (response.ok) {
-          fetchUsers();
-        }
-      } else {
-        history.push("/login");
-      }
-    } catch (err) {
-      console.log(err);
+  function handleMakeAdmin(id: number) {
+    if (user.token) {
+      api(
+        `users/${id}`,
+        "PATCH",
+        () => fetchUsers(),
+        ({ error }) => console.log(error),
+        user.token,
+        {
+          isAdmin: true,
+        },
+      );
+    } else {
+      history.push("/login");
     }
   }
 
-  async function deleteUser(id: number) {
-    try {
-      if (user.token && user.role === "admin") {
-        const response = await fetch(`http://0.0.0.0:8000/api/v1/users/${id}`, {
-          method: "DELETE",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Barer ${user.token}`,
-          },
-        });
-
-        if (response.ok) {
-          setUsers(users.filter(({ id: userId }) => userId !== id));
-        }
-      }
-    } catch (err) {
-      console.log(err);
+  function deleteUser(id: number) {
+    if (user.token && user.role === "admin") {
+      api(
+        `users/${id}`,
+        "DELETE",
+        () => setUsers(users.filter(({ id: userId }) => userId !== id)),
+        ({ error }) => console.log(error),
+        user.token,
+      );
     }
   }
 

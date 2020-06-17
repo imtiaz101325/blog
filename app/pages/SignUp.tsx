@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { Text, Button } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 
@@ -13,6 +13,7 @@ import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
 import styles from "../styles";
+import api from "../api";
 
 const SignUpContainer = styled(AppContainer)`
   justify-content: space-between;
@@ -43,31 +44,22 @@ function SignUp() {
 
   const history = useHistory();
 
-  const handleSignUp = async () => {
-    try {
-      const response: any = await fetch("http://0.0.0.0:8000/api/v1/users", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          username,
-          about,
-          email,
-          password,
-        }),
-      });
-
-      if (response.ok) {
-        history.push("/login");
+  const handleSignUp = () =>
+    api(
+      "users",
+      "POST",
+      () => history.push("/login"),
+      ({ error }) => console.log(error),
+      undefined,
+      {
+        firstName,
+        lastName,
+        username,
+        about,
+        email,
+        password,
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    );
 
   return (
     <SignUpContainer>

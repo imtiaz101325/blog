@@ -43,7 +43,7 @@ export default class UserController extends BaseController {
       });
     }
   }
-
+  //FIXME: no error for user not found
   static async getUser(
     req: express.Request,
     res: express.Response

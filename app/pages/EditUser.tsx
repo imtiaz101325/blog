@@ -13,6 +13,7 @@ import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
 import styles from "../styles";
+import api from "../api";
 
 const EditUserContainer = styled(AppContainer)`
   justify-content: space-between;
@@ -68,40 +69,25 @@ function EditUser({
 
   const history = useHistory();
 
-  const handleEditUser = async () => {
-    try {
-      const response: any = await fetch(
-        `http://0.0.0.0:8000/api/v1/users/${draftUser.id}/`,
-        {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Barer ${user.token}`,
-          },
-          body: JSON.stringify({
-            firstName,
-            lastName,
-            username,
-            about,
-            email,
-            status,
-            isAdmin,
-            isAuthor,
-          }),
-        },
-      );
-
-      if (response.ok) {
-        const data = await response.text();
-
-        console.log(data);
-        history.push("/users");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  function handleEditUser() {
+    api(
+      `users/${draftUser.id}/`,
+      "PATCH",
+      () => history.push("/users"),
+      ({ error }) => console.log(error),
+      user.token,
+      {
+        firstName,
+        lastName,
+        username,
+        about,
+        email,
+        status,
+        isAdmin,
+        isAuthor,
+      },
+    );
+  }
 
   return (
     <EditUserContainer>

@@ -110,7 +110,9 @@ function Routes() {
 
   return (
     <>
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Route path="/(users|home)">
+        <Navbar user={user} handleLogout={handleLogout} />
+      </Route>
       <Switch>
         <Route path="/login">
           <Login user={user} setToken={setToken} />

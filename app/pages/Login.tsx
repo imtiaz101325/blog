@@ -6,8 +6,8 @@
 
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
-import { useHistory } from "react-router-native";
-import { Button } from "react-native";
+import { useHistory, Link } from "react-router-native";
+import { Button, Text } from "react-native";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
@@ -37,6 +37,16 @@ const LoginContent = styled.View`
   padding: 16px;
   height: 300px;
   justify-content: space-around;
+`;
+
+const SignUpTextContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const SignUpTextLink = styled.Text`
+  color: blue;
+  text-decoration: underline;
 `;
 
 function Login({
@@ -98,6 +108,12 @@ function Login({
           onChangeText={(value) => setPassword(value)}
         />
         <Button title="Login" onPress={handleLogin} color={styles.darkShade} />
+        <SignUpTextContainer>
+          <Text>Don't have an account? </Text>
+          <Link to="/sign-up">
+            <SignUpTextLink>Sign Up</SignUpTextLink>
+          </Link>
+        </SignUpTextContainer>
       </LoginContent>
     </LoginContainer>
   );

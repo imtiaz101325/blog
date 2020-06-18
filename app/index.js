@@ -9,7 +9,7 @@ import { NativeRouter } from "react-router-native";
 import Routes from "./Routes";
 import { name as appName } from "./app.json";
 
-function App() {
+export function App() {
   return (
     <NativeRouter>
       <Routes />

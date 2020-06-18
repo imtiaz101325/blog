@@ -4,6 +4,7 @@ import faker from "faker";
 import { generateHash } from "../helpers/auth";
 
 export async function seed(knex: Knex): Promise<any> {
+  await knex("Posts").del();
   await knex("Users").del();
 
   const { salt, hash: password } = generateHash("password");
@@ -30,6 +31,18 @@ export async function seed(knex: Knex): Promise<any> {
       {
         username: "author2",
         email: "author2@blog.com",
+        isAdmin: false,
+        isAuthor: true,
+      },
+      {
+        username: "author3",
+        email: "author3@blog.com",
+        isAdmin: false,
+        isAuthor: true,
+      },
+      {
+        username: "author4",
+        email: "author4@blog.com",
         isAdmin: false,
         isAuthor: true,
       },

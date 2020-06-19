@@ -55,4 +55,30 @@ export default class PostController extends BaseController {
       });
     }
   }
+
+  static async cratePosts(
+    req: express.Request,
+    res: express.Response
+  ): Promise<any> {
+    try {
+      const { title, content } = req.body;
+      const author = req.user && req.user.id;
+
+      await Post.query().insert({
+        title,
+        content,
+        author,
+      });
+
+      return res.send({
+        success: "Crated new post",
+      });
+    } catch (err) {
+      debug("Error creating posts: ", err);
+
+      return res.status(500).send({
+        error: "Could not query database.",
+      });
+    }
+  }
 }

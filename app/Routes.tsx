@@ -17,6 +17,8 @@ import Users from "./pages/Users";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import EditUser from "./pages/EditUser";
+import CircleNav from "./components/CircleNav";
+import CreatePost from "./pages/CreatePost";
 
 const initialState = {
   id: -1,
@@ -110,7 +112,7 @@ function Routes() {
 
   return (
     <>
-      <Route path="/(users|home)">
+      <Route path="/(users|home|create-post)">
         <Navbar user={user} handleLogout={handleLogout} />
       </Route>
       <Switch>
@@ -129,10 +131,14 @@ function Routes() {
         <Route path="/home">
           <Home />
         </Route>
+        <Route path="/create-post">
+          <CreatePost user={user} />
+        </Route>
         <Route exact path="/">
           <Landing user={user} />
         </Route>
       </Switch>
+      <CircleNav user={user} />
     </>
   );
 }

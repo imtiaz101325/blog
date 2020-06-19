@@ -2,6 +2,7 @@ import * as express from "express";
 import * as jwt from "jsonwebtoken";
 
 import { secret } from "../helpers/auth";
+import { debug } from "../app";
 
 export default function isAuthenticated(
   req: express.Request,
@@ -20,12 +21,21 @@ export default function isAuthenticated(
         });
       }
 
-      if (user && new Date() > new Date((<IUser>user).expiresAt)) {
-        return res.status(401).send("Token Expired.");
-      }
+      if (user) {
+        if (new Date() > new Date((<IUser>user).expiresAt)) {
+          return res.status(401).send("Token Expired.");
+        }
 
-      req.user = <IUser>user;
-      next();
+        req.user = <IUser>user;
+        next();
+      } else {
+        debug("No user data found in access token.");
+
+        //TODO: add API spec.
+        return res.status(500).send({
+          error: "Faulty token.",
+        });
+      }
     });
   } else {
     res.status(401).send({

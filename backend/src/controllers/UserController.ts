@@ -10,9 +10,41 @@ export default class UserController extends BaseController {
     req: express.Request,
     res: express.Response
   ): Promise<any> {
-    if (req.user && req.user.role === "admin") {
-      try {
-        const users = await User.query().select(
+    try {
+      const users = await User.query().select(
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "about",
+        "lastLogin",
+        "status",
+        "isAdmin",
+        "isAuthor",
+        "email",
+        "createdAt",
+        "updatedAt"
+      );
+
+      return res.send(users);
+    } catch (err) {
+      debug("Error fetching users: ", err);
+
+      return res.status(500).send({
+        error: "Could not query database.",
+      });
+    }
+  }
+  //FIXME: no error for user not found
+  static async getUser(
+    req: express.Request,
+    res: express.Response
+  ): Promise<any> {
+    const id = req.params.id;
+
+    try {
+      const user = await User.query()
+        .select(
           "id",
           "firstName",
           "lastName",
@@ -25,77 +57,16 @@ export default class UserController extends BaseController {
           "email",
           "createdAt",
           "updatedAt"
-        );
+        )
+        .where({ id })
+        .first();
 
-        return res.send(users);
-      } catch (err) {
-        debug("Error fetching users: ", err);
+      return res.send(user);
+    } catch (err) {
+      debug(`Error fetching user with id ${id}: `, err);
 
-        return res.status(500).send({
-          error: "Could not query database.",
-        });
-      }
-    } else {
-      debug("Either user is not authenticated or user is not a admin.");
-
-      return res.status(401).send({
-        error: "User not an admin.",
-      });
-    }
-  }
-  //FIXME: no error for user not found
-  static async getUser(
-    req: express.Request,
-    res: express.Response
-  ): Promise<any> {
-    const id = req.params.id;
-
-    if (req.user) {
-      const { role } = req.user;
-
-      if (
-        role === "admin" ||
-        (role !== "admin" && req.user.id === parseInt(id, 10))
-      ) {
-        try {
-          const user = await User.query()
-            .select(
-              "id",
-              "firstName",
-              "lastName",
-              "username",
-              "about",
-              "lastLogin",
-              "status",
-              "isAdmin",
-              "isAuthor",
-              "email",
-              "createdAt",
-              "updatedAt"
-            )
-            .where({ id })
-            .first();
-
-          return res.send(user);
-        } catch (err) {
-          debug(`Error fetching user with id ${id}: `, err);
-
-          return res.status(500).send({
-            error: "Could not query database.",
-          });
-        }
-      } else {
-        debug("Only admin or user himself can get this data.");
-
-        res.status(401).send({
-          error: "User not an admin.",
-        });
-      }
-    } else {
-      debug("User does not appear to be authenticated.");
-
-      return res.status(401).send({
-        error: "User not an admin.",
+      return res.status(500).send({
+        error: "Could not query database.",
       });
     }
   }
@@ -172,46 +143,25 @@ export default class UserController extends BaseController {
   ): Promise<any> {
     const id = req.params.id;
 
-    if (req.user) {
-      const { role } = req.user;
+    try {
+      const users = await User.query().select().where({ id });
 
-      if (
-        role === "admin" ||
-        (role !== "admin" && req.user.id === parseInt(id, 10))
-      ) {
-        try {
-          const users = await User.query().select().where({ id });
+      if (users.length) {
+        const rows = await User.query().where({ id }).del();
 
-          if (users.length) {
-            const rows = await User.query().where({ id }).del();
-
-            res.send({
-              success: `Deleted ${rows} user(s) with id ${id}.`,
-            });
-          } else {
-            res.status(404).send({
-              error: `User with id ${id} not found.`,
-            });
-          }
-        } catch (err) {
-          debug("Error querying database: ", err);
-
-          return res.status(500).send({
-            error: "Could not query database.",
-          });
-        }
+        res.send({
+          success: `Deleted ${rows} user(s) with id ${id}.`,
+        });
       } else {
-        debug("Only admin or user himself can delete this data.");
-
-        res.status(401).send({
-          error: "User not an admin.",
+        res.status(404).send({
+          error: `User with id ${id} not found.`,
         });
       }
-    } else {
-      debug("User does not appear to be authenticated.");
+    } catch (err) {
+      debug("Error querying database: ", err);
 
-      return res.status(401).send({
-        error: "User not authenticated.",
+      return res.status(500).send({
+        error: "Could not query database.",
       });
     }
   }
@@ -221,66 +171,58 @@ export default class UserController extends BaseController {
     res: express.Response
   ): Promise<any> {
     const id = req.params.id;
+    const {
+      firstName,
+      lastName,
+      username,
+      about,
+      status,
+      isAdmin,
+      isAuthor,
+      email,
+    } = req.body;
 
-    if (req.user) {
-      const { role } = req.user;
+    if (
+      (status !== undefined ||
+        isAuthor !== undefined ||
+        isAdmin !== undefined) &&
+      req.user &&
+      req.user.role !== "admin"
+    ) {
+      debug("Only admin can change this data.");
 
-      if (
-        role === "admin" ||
-        (role !== "admin" && req.user.id === parseInt(id, 10))
-      ) {
-        const {
-          firstName,
-          lastName,
-          username,
-          about,
-          status,
-          isAdmin,
-          isAuthor,
-          email,
-        } = req.body;
+      res.status(401).send({
+        error: "User not an admin.",
+      });
+    }
 
-        const fields: {
-          [key: string]: string | boolean;
-        } = {
-          firstName,
-          lastName,
-          username,
-          about,
-          status,
-          isAdmin,
-          isAuthor,
-          email,
-        };
+    const fields: {
+      [key: string]: string | boolean;
+    } = {
+      firstName,
+      lastName,
+      username,
+      about,
+      status,
+      isAdmin,
+      isAuthor,
+      email,
+    };
 
-        if (req.method === "PATCH") {
-          try {
-            await User.query().where({ id }).update(fields);
+    if (req.method === "PATCH") {
+      try {
+        await User.query().where({ id }).update(fields);
 
-            res.send({
-              success: `Successfully updated user with id ${id}.`
-            });
-          } catch (err) {
-            debug("Error updating database: ", err);
+        res.send({
+          success: `Successfully updated user with id ${id}.`,
+        });
+      } catch (err) {
+        debug("Error updating database: ", err);
 
-            return res.status(500).send({
-              error: "Could not query database.",
-            });
-          }
-        }
-      } else {
-        debug("Only admin or user himself can update this data.");
-
-        res.status(401).send({
-          error: "User not an admin.",
+        return res.status(500).send({
+          error: "Could not query database.",
         });
       }
-    } else {
-      debug("User does not appear to be authenticated.");
-
-      return res.status(401).send({
-        error: "User not authenticated.",
-      });
     }
   }
 }

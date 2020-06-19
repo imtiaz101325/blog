@@ -6,8 +6,9 @@ import Debug from "debug";
 import { Model } from "objection";
 import * as swaggerUi from "swagger-ui-express";
 
-import usersRouter from "./routes/users";
 import authRouter from "./routes/auth";
+import usersRouter from "./routes/users";
+import postsRouter from "./routes/posts";
 import openAPISpec from "./openapi.json";
 
 import knex from "./models/knex";
@@ -37,7 +38,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openAPISpec));
-app.use("/api/v1/users/", usersRouter);
 app.use("/api/v1/auth/", authRouter);
+app.use("/api/v1/users/", usersRouter);
+app.use("/api/v1/posts/", postsRouter);
 
 export default app;

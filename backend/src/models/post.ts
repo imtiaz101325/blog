@@ -17,9 +17,9 @@ export default class Post extends Model {
         modelClass: User,
         join: {
           from: "Posts.id",
-          to: "Users.id"
-        }
-      }
-    }
+          to: "Users.id",
+        },
+      },
+    };
   }
 }

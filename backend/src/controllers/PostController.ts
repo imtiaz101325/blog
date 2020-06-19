@@ -33,7 +33,7 @@ export default class PostController extends BaseController {
               content,
               author: {
                 id: author,
-                name
+                name,
               },
             };
           } catch (err) {

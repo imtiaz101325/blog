@@ -13,8 +13,18 @@ router.get("/:id/", isAuthenticated, isAdminOrSelf, UserController.getUser);
 
 router.post("/", UserController.createUser);
 
-router.delete("/:id/", isAuthenticated, isAdminOrSelf, UserController.deleteUser);
+router.delete(
+  "/:id/",
+  isAuthenticated,
+  isAdminOrSelf,
+  UserController.deleteUser
+);
 
-router.patch("/:id/", isAuthenticated, isAdminOrSelf, UserController.updateUser);
+router.patch(
+  "/:id/",
+  isAuthenticated,
+  isAdminOrSelf,
+  UserController.updateUser
+);
 
 export default router;

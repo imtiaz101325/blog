@@ -58,7 +58,7 @@ function SignUp() {
         about,
         email,
         password,
-      }
+      },
     );
 
   return (

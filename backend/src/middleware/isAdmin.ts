@@ -10,9 +10,7 @@ export default function isAdmin(
   if (req.user) {
     const { role } = req.user;
 
-    if (
-      role === "admin"
-    ) {
+    if (role === "admin") {
       next();
     } else {
       debug("Only admin can access this route.");

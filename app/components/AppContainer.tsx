@@ -1,9 +1,7 @@
 import styled from "styled-components/native";
+import { Layout } from '@ui-kitten/components';
 
-import styles from "../styles";
-
-export default styled.View`
+export default styled(Layout)`
   padding: 16px;
   flex: 1;
-  background-color: ${styles.lightShade};
 `;

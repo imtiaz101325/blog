@@ -1,19 +1,16 @@
 import React, { useEffect } from "react";
 import styled from "styled-components/native";  
 import { useHistory } from "react-router-native";
+import { Layout, Text } from '@ui-kitten/components';
 
-import styles from "../styles";
-
-const NavbarContainer = styled.View`
-  background-color: ${styles.darkShade};
+const NavbarContainer = styled(Layout)`
   align-items: flex-end;
   justify-content: center;
   height: 48px;
 `;
 
-const LogoutText = styled.Text`
+const LogoutText = styled(Text)`
   padding: 8px;
-  color: ${styles.lightShade};
 `;
 
 function Navbar({

@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
+import { Layout, Text } from '@ui-kitten/components';
 
-import styles from "../styles";
-
-const CircleNavContainer = styled.View`
-  background-color: ${styles.darkShade};
+const CircleNavContainer = styled(Layout)`
   height: 64px;
   width: 64px;
   border-radius: 32px;
@@ -15,8 +13,7 @@ const CircleNavContainer = styled.View`
   right: 16px;
 `;
 
-const AddPost = styled.Text`
-  color: ${styles.lightShade};
+const AddPost = styled(Text)`
   font-size: 64px;
   line-height: 70px;
 `;

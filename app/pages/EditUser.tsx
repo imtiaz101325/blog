@@ -5,32 +5,30 @@
  */
 
 import React, { useState } from "react";
-import { Text, Button, Switch } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
+import {
+  Button,
+  Toggle,
+  Input,
+} from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
-import styles from "../styles";
 import api from "../api";
 
 const EditUserContainer = styled(AppContainer)`
   justify-content: space-between;
 `;
 
-const EditUserInput = styled.TextInput`
-  border: 2px solid ${styles.darkShade};
-  border-top-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
-  color: ${styles.darkShade};
+const EditUserContent = styled.ScrollView`
+  flex: 0.95;
 `;
-
-const EditUserContent = styled.ScrollView``;
 
 const EditUserRows = styled.View`
   margin-bottom: 16px;
+  align-items: flex-start;
 `;
 
 function EditUser({
@@ -94,66 +92,58 @@ function EditUser({
       <PageTitle>Edit User</PageTitle>
       <EditUserContent>
         <EditUserRows>
-          <Text>First Name</Text>
-          <EditUserInput
+          <Input
+            placeholder="First Name"
             value={firstName}
             onChangeText={(value) => setFirstName(value)}
           />
         </EditUserRows>
         <EditUserRows>
-          <Text>Last Name</Text>
-          <EditUserInput
+          <Input
+            placeholder="Last Name"
             value={lastName}
             onChangeText={(value) => setLastName(value)}
           />
         </EditUserRows>
         <EditUserRows>
-          <Text>Username</Text>
-          <EditUserInput
+          <Input
+            placeholder="Username"
             value={username}
             onChangeText={(value) => setUsername(value)}
           />
         </EditUserRows>
         <EditUserRows>
-          <Text>About</Text>
-          <EditUserInput
+          <Input
+            placeholder="About"
             value={about}
             onChangeText={(value) => setAbout(value)}
           />
         </EditUserRows>
         <EditUserRows>
-          <Text>Email</Text>
-          <EditUserInput
+          <Input
+            placeholder="Email"
             value={email}
             onChangeText={(value) => setEmail(value)}
           />
         </EditUserRows>
         <EditUserRows>
-          <Text>Status</Text>
-          <EditUserInput
+          <Input
+            placeholder="Status"
             value={status}
             onChangeText={(value) => setStatus(value)}
           />
         </EditUserRows>
         <EditUserRows>
-          <Text>Admin</Text>
-          <Switch
-            value={isAdmin}
-            onValueChange={(value) => setIsAdmin(value)}
-          />
+          <Toggle checked={isAdmin} onChange={(value) => setIsAdmin(value)}>
+            Admin
+          </Toggle>
         </EditUserRows>
         <EditUserRows>
-          <Text>Author</Text>
-          <Switch
-            value={isAuthor}
-            onValueChange={(value) => setIsAuthor(value)}
-          />
+          <Toggle checked={isAuthor} onChange={(value) => setIsAuthor(value)}>
+            Author
+          </Toggle>
         </EditUserRows>
-        <Button
-          title="Save"
-          onPress={handleEditUser}
-          color={styles.darkShade}
-        />
+        <Button onPress={handleEditUser}>Save</Button>
       </EditUserContent>
     </EditUserContainer>
   );

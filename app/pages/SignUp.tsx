@@ -5,29 +5,22 @@
  */
 
 import React, { useState } from "react";
-import { Text, Button } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
+import { Button, Input } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
-import styles from "../styles";
 import api from "../api";
 
 const SignUpContainer = styled(AppContainer)`
   justify-content: space-between;
 `;
 
-const SignUpInput = styled.TextInput`
-  border: 2px solid ${styles.darkShade};
-  border-top-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
-  color: ${styles.darkShade};
+const SignUpContent = styled.ScrollView`
+  flex: 0.85;
 `;
-
-const SignUpContent = styled.ScrollView``;
 
 const SignUpRows = styled.View`
   margin-bottom: 16px;
@@ -66,61 +59,59 @@ function SignUp() {
       <PageTitle>Sign Up</PageTitle>
       <SignUpContent>
         <SignUpRows>
-          <Text>First Name</Text>
-          <SignUpInput
+          <Input
+            placeholder="First Name"
             value={firstName}
             onChangeText={(value) => setFirstName(value)}
           />
         </SignUpRows>
         <SignUpRows>
-          <Text>Last Name</Text>
-          <SignUpInput
+          <Input
+            placeholder="Last Name"
             value={lastName}
             onChangeText={(value) => setLastName(value)}
           />
         </SignUpRows>
         <SignUpRows>
-          <Text>Username</Text>
-          <SignUpInput
+          <Input
+            placeholder="Username"
             value={username}
             onChangeText={(value) => setUsername(value)}
           />
         </SignUpRows>
         <SignUpRows>
-          <Text>About</Text>
-          <SignUpInput
+          <Input
+            placeholder="About"
             value={about}
             onChangeText={(value) => setAbout(value)}
           />
         </SignUpRows>
         <SignUpRows>
-          <Text>Email</Text>
-          <SignUpInput
+          <Input
+            placeholder="Email"
             value={email}
             onChangeText={(value) => setEmail(value)}
           />
         </SignUpRows>
         <SignUpRows>
-          <Text>Password</Text>
-          <SignUpInput
+          <Input
+            placeholder="Password"
             secureTextEntry
             value={password}
             onChangeText={(value) => setPassword(value)}
           />
         </SignUpRows>
         <SignUpRows>
-          <Text>Confirm password</Text>
-          <SignUpInput
+          <Input
+            placeholder="Confirm password"
             secureTextEntry
             value={confirmPassword}
             onChangeText={(value) => setConfirmPassword(value)}
           />
         </SignUpRows>
-        <Button
-          title="Sign Up"
-          onPress={handleSignUp}
-          color={styles.darkShade}
-        />
+        <Button onPress={handleSignUp}>
+          Sign Up
+        </Button>
       </SignUpContent>
     </SignUpContainer>
   );

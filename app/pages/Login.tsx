@@ -7,12 +7,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import { useHistory, Link } from "react-router-native";
-import { Button, Text } from "react-native";
+import { Text, Button, Input } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
-import styles from "../styles";
 import api from "../api";
 
 const LoginContainer = styled(AppContainer)`
@@ -20,33 +19,15 @@ const LoginContainer = styled(AppContainer)`
   justify-content: space-between;
 `;
 
-const DarkText = styled.Text`
-  color: ${styles.darkShade};
-`;
-
-const LoginInput = styled.TextInput`
-  border: 2px solid ${styles.darkShade};
-  border-top-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
-  color: ${styles.darkShade};
-`;
-
 const LoginContent = styled.View`
-  margin-top: 8px;
   padding: 16px;
-  height: 300px;
-  justify-content: space-around;
+  height: 250px;
+  justify-content: space-between;
 `;
 
 const SignUpTextContainer = styled.View`
   flex-direction: row;
   justify-content: center;
-`;
-
-const SignUpTextLink = styled.Text`
-  color: blue;
-  text-decoration: underline;
 `;
 
 function Login({
@@ -96,22 +77,22 @@ function Login({
     <LoginContainer>
       <PageTitle>Login</PageTitle>
       <LoginContent>
-        <DarkText>Username</DarkText>
-        <LoginInput
+        <Input
+          placeholder="Username"
           value={username}
           onChangeText={(value) => setUsername(value)}
         />
-        <DarkText>password</DarkText>
-        <LoginInput
+        <Input
+          placeholder="Password"
           secureTextEntry
           value={password}
           onChangeText={(value) => setPassword(value)}
         />
-        <Button title="Login" onPress={handleLogin} color={styles.darkShade} />
+        <Button onPress={handleLogin}>Login</Button>
         <SignUpTextContainer>
           <Text>Don't have an account? </Text>
           <Link to="/sign-up">
-            <SignUpTextLink>Sign Up</SignUpTextLink>
+            <Text status="info">Sign Up</Text>
           </Link>
         </SignUpTextContainer>
       </LoginContent>

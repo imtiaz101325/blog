@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, Button, ButtonProps } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
+import { Button, Card, Layout, Text, Icon } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
-import styles from "../styles";
 import api from "../api";
 
-const CardContainer = styled.View`
-  margin-bottom: 8px;
-  background-color: ${styles.darkShade};
-  padding: 16px;
-  position: relative;
+const CardContainer = styled(Card)`
+  margin-bottom: 16px;
 `;
 
-const CardContent = styled.View`
-  margin: 4px;
-`;
-
-const CardText = styled.Text`
-  color: ${styles.lightShade};
+const CardHeaderContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const CardActionContainer = styled.View`
@@ -29,35 +23,31 @@ const CardActionContainer = styled.View`
   justify-content: flex-end;
 `;
 
-const CardButtonWrapper = styled.View`
+const CardButton = styled(Button)`
   margin: 4px;
 `;
 
-function CardButton(props: ButtonProps) {
-  return (
-    <CardButtonWrapper>
-      <Button {...props} />
-    </CardButtonWrapper>
-  );
-}
-
-const CardLink = styled.Text`
-  color: red;
+const CardLink = styled(Text)`
   text-decoration: underline;
 `;
 
-const AdminBadgeContainer = styled.View`
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background-color: red;
-  padding: 2px;
+const AdminBadgeContainer = styled(Layout)`
+  flex-direction: row;
+  align-items: center;
+  padding: 0 4px;
+`;
+
+const StyledIcon = styled(Icon)`
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
 `;
 
 function AdminBadge() {
   return (
-    <AdminBadgeContainer>
-      <Text>Admin</Text>
+    <AdminBadgeContainer level="4">
+      <StyledIcon name="person-outline" fill="#fff" />
+      <Text status="danger">Admin</Text>
     </AdminBadgeContainer>
   );
 }
@@ -152,43 +142,51 @@ function Users({
             } = user;
 
             return (
-              <CardContainer key={id}>
-                {role === "admin" && <AdminBadge />}
-                <CardContent>
-                  <CardText>{name}</CardText>
-                  <CardText>ID: {id}</CardText>
-                  <CardText>Username: {username}</CardText>
-                  <CardText>Role: {role}</CardText>
-                  <CardText>Email: {email}</CardText>
+              <CardContainer
+                key={id}
+                header={(props) => (
+                  <CardHeaderContainer {...props}>
+                    <Text>{name}</Text>
+                    {role === "admin" && <AdminBadge />}
+                  </CardHeaderContainer>
+                )}
+                footer={(props) => (
+                  <CardActionContainer {...props}>
+                    <CardButton
+                      onPress={() =>
+                        editUser({
+                          id,
+                          firstName,
+                          lastName,
+                          username,
+                          about,
+                          status,
+                          isAdmin,
+                          isAuthor,
+                          email,
+                        })
+                      }>
+                      Edit
+                    </CardButton>
+                    <CardButton status="danger" onPress={() => deleteUser(id)}>
+                      Delete
+                    </CardButton>
+                  </CardActionContainer>
+                )}>
+                <View>
+                  <Text>ID: {id}</Text>
+                  <Text>Username: {username}</Text>
+                  <Text>Role: {role}</Text>
+                  <Text>Email: {email}</Text>
                   {role !== "admin" && (
-                    <CardLink onPress={() => handleMakeAdmin(id)}>
+                    <CardLink
+                      appearance="alternative"
+                      status="danger"
+                      onPress={() => handleMakeAdmin(id)}>
                       make admin
                     </CardLink>
                   )}
-                </CardContent>
-                <CardActionContainer>
-                  <CardButton
-                    title="Edit"
-                    onPress={() =>
-                      editUser({
-                        id,
-                        firstName,
-                        lastName,
-                        username,
-                        about,
-                        status,
-                        isAdmin,
-                        isAuthor,
-                        email,
-                      })
-                    }
-                  />
-                  <CardButton
-                    title="Delete"
-                    onPress={() => deleteUser(id)}
-                    color="red"
-                  />
-                </CardActionContainer>
+                </View>
               </CardContainer>
             );
           })}

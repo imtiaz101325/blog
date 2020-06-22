@@ -1,10 +1,9 @@
 import styled from "styled-components/native";
+import { Text } from "@ui-kitten/components";
 
-import styles from "../styles";
-
-export default styled.Text`
-  font-size: 32px;
+export default styled(Text).attrs(() => ({
+  category: "h1",
+}))`
   text-align: center;
-  font-weight: bold;
-  color: ${styles.darkShade};
+  margin-bottom: 8px;
 `;

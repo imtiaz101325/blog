@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components/native";
+import { View, ScrollView } from "react-native";
+import { Card, Text } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
 import api from "../api";
-import { View, Text, ScrollView } from "react-native";
+
+const StyledCard = styled(Card)`
+  margin-bottom: 8px;
+`;
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -28,10 +34,14 @@ function Home() {
       <ScrollView>
         {posts.length
           ? posts.map(({ title, content }) => (
-              <View>
-                <Text>{title}</Text>
+              <StyledCard
+                header={(props) => (
+                  <View {...props}>
+                    <Text>{title}</Text>
+                  </View>
+                )}>
                 <Text>{content}</Text>
-              </View>
+              </StyledCard>
             ))
           : null}
       </ScrollView>

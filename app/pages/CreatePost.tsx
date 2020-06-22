@@ -1,21 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { Text, Button } from "react-native";
 import { useHistory } from "react-router-native";
+import { Button, Text, Input } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
 
-import styles from "../styles";
 import api from "../api";
-
-const CreatePostInput = styled.TextInput`
-  border: 2px solid ${styles.darkShade};
-  border-top-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
-  color: ${styles.darkShade};
-`;
 
 const CreatePostContent = styled.ScrollView``;
 
@@ -60,26 +51,25 @@ function CreatePost({
       <PageTitle>Create Post</PageTitle>
       <CreatePostContent>
         <CreatePostRows>
-          <Text>Title</Text>
-          <CreatePostInput
+          <Input
+            placeholder="Title"
             value={title}
             onChangeText={(value) => setTitle(value)}
           />
         </CreatePostRows>
         <CreatePostRows>
-          <Text>Post</Text>
-          <CreatePostInput
-            multiline={true}
-            numberOfLines={20}
+          <Input
+            multiline
             value={content}
+            placeholder="Post"
+            numberOfLines={20}
+            textStyle={{
+              textAlignVertical: "top",
+            }}
             onChangeText={(value) => setContent(value)}
           />
         </CreatePostRows>
-        <Button
-          title="Create Post"
-          onPress={handleCreatePost}
-          color={styles.darkShade}
-        />
+        <Button onPress={handleCreatePost}>Create Post</Button>
       </CreatePostContent>
     </AppContainer>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components/native";  
 import { useHistory } from "react-router-native";
-import { Layout, Text } from '@ui-kitten/components';
+import { Text, Layout } from '@ui-kitten/components';
 
 const NavbarContainer = styled(Layout)`
   align-items: flex-end;

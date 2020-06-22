@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
-import { Layout, Text } from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 
-const CircleNavContainer = styled(Layout)`
+const CircleNavContainer = styled.View`
   height: 64px;
   width: 64px;
   border-radius: 32px;

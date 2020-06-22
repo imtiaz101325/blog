@@ -10,8 +10,8 @@ export default class User extends Model {
   status?: string;
   isAdmin?: boolean;
   isAuthor?: boolean;
-  token?: string;
-  expiresAt?: Date;
+  token?: string | null;
+  expiresAt?: Date | null;
   email!: string;
   salt!: string;
   password!: string;

@@ -19,6 +19,7 @@ import Navbar from "./components/Navbar";
 import EditUser from "./pages/EditUser";
 import CircleNav from "./components/CircleNav";
 import CreatePost from "./pages/CreatePost";
+import api from "./api";
 
 const initialState = {
   id: -1,
@@ -87,8 +88,14 @@ function Routes() {
     }
   }
 
-  function handleLogout() {
-    setToken("");
+  async function handleLogout() {
+    await api(
+      "auth",
+      "DELETE",
+      () => setToken(""),
+      (error) => console.log(error),
+      user.token,
+    );
   }
 
   function handleEditUser(user: any) {

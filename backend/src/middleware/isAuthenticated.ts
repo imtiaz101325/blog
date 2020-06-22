@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken";
 
 import { secret } from "../helpers/auth";
 import { debug } from "../app";
+import User from "../models/user";
 
 export default function isAuthenticated(
   req: express.Request,
@@ -14,7 +15,7 @@ export default function isAuthenticated(
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
-    jwt.verify(token, secret, (err, user) => {
+    jwt.verify(token, secret, async (err, user) => {
       if (err) {
         return res.status(403).send({
           error: "Could not verify access token.",
@@ -22,7 +23,28 @@ export default function isAuthenticated(
       }
 
       if (user) {
+        const { token: dbToken } = await User.query()
+          .select("token")
+          .where({ id: (<IUser>user).id })
+          .first();
+
+        if (!dbToken) {
+          debug("Token not found in database.");
+
+          return res.status(401).send("Token Expired.");
+        }
+
+        if (dbToken && dbToken !== token) {
+          debug("Access token with same user ID does not match with database token.");
+
+          return res.status(500).send({
+            error: "Faulty token.",
+          });
+        }
+        
         if (new Date() > new Date((<IUser>user).expiresAt)) {
+          debug("Token past two weeks expiration period.");
+
           return res.status(401).send("Token Expired.");
         }
 

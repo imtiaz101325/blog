@@ -81,4 +81,27 @@ export default class AuthController extends BaseController {
       });
     }
   }
+
+  static async logout(
+    req: express.Request,
+    res: express.Response
+  ): Promise<any> {
+    try {
+      req.user &&
+        (await User.query().where({ id: req.user.id }).first().update({
+          token: null,
+          expiresAt: null,
+        }));
+
+      return res.send({
+        success: "Successfully logged out",
+      });
+    } catch (err) {
+      debug("Error querying user table", err);
+
+      return res.status(500).send({
+        error: "Could not query database.",
+      });
+    }
+  }
 }

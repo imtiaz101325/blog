@@ -7,6 +7,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch, useHistory } from "react-router-native";
 import { useBackHandler } from "@react-native-community/hooks";
+import { Divider } from "@ui-kitten/components";
 
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -18,11 +19,12 @@ import EditUser from "./pages/EditUser";
 import CircleNav from "./components/CircleNav";
 import CreatePost from "./pages/CreatePost";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import AppDrawer from "./components/AppDrawer";
 
 import withUserState from "./containers/withUserState";
 
 function Routes() {
-  const history = useHistory();
+  const [drawerVisibility, setDrawerVisibility] = useState(false);
   const [draftUser, setDraftUser] = useState({
     id: -1,
     firstName: "",
@@ -34,6 +36,11 @@ function Routes() {
     isAuthor: false,
     email: "",
   });
+  const history = useHistory();
+
+  function toggleDrawer() {
+    setDrawerVisibility(!drawerVisibility);
+  }
 
   function handleEditUser(user: any) {
     setDraftUser(user);
@@ -53,7 +60,11 @@ function Routes() {
   return (
     <>
       <Route path="/(users|home|create-post)">
-        <Navbar />
+        <Navbar
+          toggleDrawer={toggleDrawer}
+          drawerVisibility={drawerVisibility}
+        />
+        <Divider />
       </Route>
       <Switch>
         <AuthenticatedRoute path="/login">
@@ -63,7 +74,7 @@ function Routes() {
           <SignUp />
         </Route>
         <Route path="/users">
-          <Users handleEditUser={handleEditUser}/>
+          <Users handleEditUser={handleEditUser} />
         </Route>
         <Route path="/edit-user">
           <EditUser draftUser={draftUser} />
@@ -79,6 +90,7 @@ function Routes() {
         </AuthenticatedRoute>
       </Switch>
       <CircleNav />
+      {drawerVisibility && <AppDrawer toggleDrawer={toggleDrawer} />}
     </>
   );
 }

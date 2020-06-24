@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
-import { Button, Text, Input } from "@ui-kitten/components";
+import { Button, Input } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
+
+import { UserContext } from "../containers/withUserState";
 
 import api from "../api";
 
@@ -14,21 +16,10 @@ const CreatePostRows = styled.View`
   margin-bottom: 16px;
 `;
 
-function CreatePost({
-  user,
-}: {
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-    expiresAt: string;
-    iat: string;
-    token: string;
-  };
-}) {
+function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const { user } = useContext(UserContext);
 
   const history = useHistory();
 

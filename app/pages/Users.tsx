@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ScrollView, View } from "react-native";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
@@ -6,6 +6,8 @@ import { Button, Card, Layout, Text, Icon } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
+
+import { UserContext } from "../containers/withUserState";
 
 import api from "../api";
 
@@ -53,27 +55,27 @@ function AdminBadge() {
 }
 
 function Users({
-  user,
-  editUser,
+  handleEditUser,
 }: {
-  user: {
+  handleEditUser: (user: {
     id: number;
+    firstName: string;
+    lastName: string;
     username: string;
+    about: string;
+    status: string;
+    isAdmin: boolean;
+    isAuthor: boolean;
     email: string;
-    role: string;
-    expiresAt: string;
-    iat: string;
-    token: string;
-  };
-  editUser: (user: any) => void;
+  }) => void;
 }) {
   const [users, setUsers] = useState([]);
-
   const history = useHistory();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     fetchUsers();
-  }, [user]);
+  }, []);
 
   function fetchUsers() {
     if (user.token) {
@@ -154,7 +156,7 @@ function Users({
                   <CardActionContainer {...props}>
                     <CardButton
                       onPress={() =>
-                        editUser({
+                        handleEditUser({
                           id,
                           firstName,
                           lastName,

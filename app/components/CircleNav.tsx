@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
-import { Text } from '@ui-kitten/components';
+import { Text, Layout } from "@ui-kitten/components";
+import { UserContext } from "../containers/withUserState";
 
-const CircleNavContainer = styled.View`
+const CircleNavContainer = styled(Layout).attrs({
+  level: "4",
+})`
   height: 64px;
   width: 64px;
   border-radius: 32px;
@@ -18,30 +21,19 @@ const AddPost = styled(Text)`
   line-height: 70px;
 `;
 
-function CircleNav({
-  user,
-}: {
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-    expiresAt: string;
-    iat: string;
-    token: string;
-  };
-}) {
+function CircleNav() {
   const history = useHistory();
+  const { user } = useContext(UserContext);
 
   function addPost() {
     if (user.role === "author") {
-      history.push("/create-post")
+      history.push("/create-post");
     }
   }
 
   return (
     <CircleNavContainer>
-      <AddPost onPress={ addPost }>+</AddPost>
+      <AddPost onPress={addPost}>+</AddPost>
     </CircleNavContainer>
   );
 }

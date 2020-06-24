@@ -4,15 +4,13 @@
  * @format
  */
 
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";
 import { Button } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
-
-import styles from "../styles";
 
 const HomePageContainer = styled(AppContainer)`
   height: 90%;
@@ -24,30 +22,8 @@ const ActionContainer = styled.View`
   height: 110px;
 `;
 
-function Landing({
-  user,
-}: {
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-    expiresAt: string;
-    iat: string;
-    token: string;
-  };
-}) {
+function Landing() {
   const history = useHistory();
-
-  useEffect(() => {
-    if (user.token) {
-      if (user.role === "admin") {
-        history.push("/users");
-      } else {
-        history.push("/home");
-      }
-    }
-  }, [user]);
 
   return (
     <HomePageContainer>

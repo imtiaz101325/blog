@@ -137,6 +137,7 @@ export default class UserController extends BaseController {
     }
   }
 
+  // TODO: handle deleting users with posts
   static async deleteUser(
     req: express.Request,
     res: express.Response

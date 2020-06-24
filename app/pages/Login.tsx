@@ -4,13 +4,15 @@
  * @format
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components/native";
-import { useHistory, Link } from "react-router-native";
+import { Link } from "react-router-native";
 import { Text, Button, Input } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
+
+import { UserContext } from "../containers/withUserState";
 
 import api from "../api";
 
@@ -30,35 +32,10 @@ const SignUpTextContainer = styled.View`
   justify-content: center;
 `;
 
-function Login({
-  user,
-  setToken,
-}: {
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-    expiresAt: string;
-    iat: string;
-    token: string;
-  };
-  setToken: (token: string) => Promise<void>;
-}) {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const history = useHistory();
-
-  useEffect(() => {
-    if (user.token) {
-      if (user.role === "admin") {
-        history.push("/users");
-      } else {
-        history.push("/home");
-      }
-    }
-  }, [user]);
+  const { setToken } = useContext(UserContext)
 
   const handleLogin = () =>
     api(

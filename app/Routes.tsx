@@ -7,8 +7,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch, useHistory } from "react-router-native";
 import { useBackHandler } from "@react-native-community/hooks";
-import AsyncStorage from "@react-native-community/async-storage";
-import decode from "jwt-decode";
 
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -19,22 +17,12 @@ import Navbar from "./components/Navbar";
 import EditUser from "./pages/EditUser";
 import CircleNav from "./components/CircleNav";
 import CreatePost from "./pages/CreatePost";
-import api from "./api";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
-const initialState = {
-  id: -1,
-  username: "",
-  email: "",
-  role: "",
-  expiresAt: "",
-  iat: "",
-  token: "",
-};
+import withUserState from "./containers/withUserState";
 
 function Routes() {
   const history = useHistory();
-  const [user, setUser] = useState(initialState);
-
   const [draftUser, setDraftUser] = useState({
     id: -1,
     firstName: "",
@@ -47,57 +35,6 @@ function Routes() {
     email: "",
   });
 
-  function handleSetUser(token: string) {
-    const payload: {
-      id: number;
-      username: string;
-      email: string;
-      role: string;
-      expiresAt: string;
-      iat: string;
-    } = decode(token);
-
-    setUser({
-      ...payload,
-      token,
-    });
-  }
-
-  async function getToken() {
-    try {
-      const token = await AsyncStorage.getItem("@access_token");
-      if (token !== null) {
-        handleSetUser(token);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function setToken(token: string) {
-    try {
-      if (token) {
-        await AsyncStorage.setItem("@access_token", token);
-        handleSetUser(token);
-      } else {
-        await AsyncStorage.removeItem("@access_token");
-        setUser(initialState);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function handleLogout() {
-    await api(
-      "auth",
-      "DELETE",
-      () => setToken(""),
-      (error) => console.log(error),
-      user.token,
-    );
-  }
-
   function handleEditUser(user: any) {
     setDraftUser(user);
   }
@@ -108,10 +45,6 @@ function Routes() {
   });
 
   useEffect(() => {
-    getToken();
-  }, []);
-
-  useEffect(() => {
     if (draftUser.username) {
       history.push("/edit-user");
     }
@@ -120,34 +53,34 @@ function Routes() {
   return (
     <>
       <Route path="/(users|home|create-post)">
-        <Navbar user={user} handleLogout={handleLogout} />
+        <Navbar />
       </Route>
       <Switch>
-        <Route path="/login">
-          <Login user={user} setToken={setToken} />
-        </Route>
+        <AuthenticatedRoute path="/login">
+          <Login />
+        </AuthenticatedRoute>
         <Route path="/sign-up">
           <SignUp />
         </Route>
         <Route path="/users">
-          <Users user={user} editUser={handleEditUser} />
+          <Users handleEditUser={handleEditUser}/>
         </Route>
         <Route path="/edit-user">
-          <EditUser user={user} draftUser={draftUser} />
+          <EditUser draftUser={draftUser} />
         </Route>
         <Route path="/home">
           <Home />
         </Route>
         <Route path="/create-post">
-          <CreatePost user={user} />
+          <CreatePost />
         </Route>
-        <Route exact path="/">
-          <Landing user={user} />
-        </Route>
+        <AuthenticatedRoute exact path="/">
+          <Landing />
+        </AuthenticatedRoute>
       </Switch>
-      <CircleNav user={user} />
+      <CircleNav />
     </>
   );
 }
 
-export default Routes;
+export default withUserState(Routes);

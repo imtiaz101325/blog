@@ -4,7 +4,7 @@
  * @format
  */
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
 import {
@@ -15,6 +15,8 @@ import {
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";
+
+import { UserContext } from "../containers/withUserState";
 
 import api from "../api";
 
@@ -32,18 +34,8 @@ const EditUserRows = styled.View`
 `;
 
 function EditUser({
-  user,
   draftUser,
 }: {
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-    expiresAt: string;
-    iat: string;
-    token: string;
-  };
   draftUser: {
     id: number;
     firstName: string;
@@ -64,6 +56,7 @@ function EditUser({
   const [status, setStatus] = useState(draftUser.status);
   const [isAdmin, setIsAdmin] = useState(draftUser.isAdmin);
   const [isAuthor, setIsAuthor] = useState(draftUser.isAuthor);
+  const { user } = useContext(UserContext);
 
   const history = useHistory();
 

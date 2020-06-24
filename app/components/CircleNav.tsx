@@ -31,6 +31,10 @@ function CircleNav() {
     }
   }
 
+  if (user.role !== "author") {
+    return null;
+  }
+
   return (
     <CircleNavContainer>
       <AddPost onPress={addPost}>+</AddPost>

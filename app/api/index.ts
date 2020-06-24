@@ -21,7 +21,7 @@ export default async function api(
     const response = await fetch(`${base}${route}`, {
       method,
       headers,
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     const data = await response.json();
@@ -33,7 +33,7 @@ export default async function api(
     }
   } catch (error) {
     handleError({
-      error
+      error,
     });
   }
 }

@@ -21,9 +21,7 @@ export const UserContext = createContext({
   setToken: (token: string) => {},
 });
 
-export default function withUserState(
-  WrappedComponent: () => JSX.Element,
-) {
+export default function withUserState(WrappedComponent: () => JSX.Element) {
   return function UserStateWrapper(props: {}) {
     const [user, setUser] = useState(initialState);
     const history = useHistory();

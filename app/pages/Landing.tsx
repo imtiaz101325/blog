@@ -1,9 +1,3 @@
-/**
- * These enable formatting code using prettier
- *
- * @format
- */
-
 import React from "react";
 import styled from "styled-components/native";
 import { useHistory } from "react-router-native";

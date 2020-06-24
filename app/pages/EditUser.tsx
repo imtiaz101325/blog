@@ -1,17 +1,7 @@
-/**
- * These enable formatting code using prettier
- *
- * @format
- */
-
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
-import {
-  Button,
-  Toggle,
-  Input,
-} from "@ui-kitten/components";
+import { Button, Toggle, Input } from "@ui-kitten/components";
 
 import AppContainer from "../components/AppContainer";
 import PageTitle from "../components/PageTitle";

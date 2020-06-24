@@ -1,9 +1,3 @@
-/**
- * These enable formatting code using prettier
- *
- * @format
- */
-
 import React, { useState } from "react";
 import { useHistory } from "react-router-native";
 import styled from "styled-components/native";
@@ -109,9 +103,7 @@ function SignUp() {
             onChangeText={(value) => setConfirmPassword(value)}
           />
         </SignUpRows>
-        <Button onPress={handleSignUp}>
-          Sign Up
-        </Button>
+        <Button onPress={handleSignUp}>Sign Up</Button>
       </SignUpContent>
     </SignUpContainer>
   );

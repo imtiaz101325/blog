@@ -1,9 +1,3 @@
-/**
- * These enable formatting code using prettier
- *
- * @format
- */
-
 import React, { useEffect, useState } from "react";
 import { Route, Switch, useHistory } from "react-router-native";
 import { useBackHandler } from "@react-native-community/hooks";

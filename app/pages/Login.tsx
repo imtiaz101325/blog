@@ -1,9 +1,3 @@
-/**
- * These enable formatting code using prettier
- *
- * @format
- */
-
 import React, { useState, useContext } from "react";
 import styled from "styled-components/native";
 import { Link } from "react-router-native";
@@ -35,7 +29,7 @@ const SignUpTextContainer = styled.View`
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setToken } = useContext(UserContext)
+  const { setToken } = useContext(UserContext);
 
   const handleLogin = () =>
     api(

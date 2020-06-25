@@ -16,6 +16,10 @@ const CreatePostRows = styled.View`
   margin-bottom: 16px;
 `;
 
+const CreatePostActions = styled.View`
+  
+`;
+
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -60,7 +64,10 @@ function CreatePost() {
             onChangeText={(value) => setContent(value)}
           />
         </CreatePostRows>
-        <Button onPress={handleCreatePost}>Create Post</Button>
+        <CreatePostActions>
+          <Button onPress={() => {}}>Add Photos</Button>
+          <Button onPress={handleCreatePost}>Create Post</Button>
+        </CreatePostActions>
       </CreatePostContent>
     </AppContainer>
   );

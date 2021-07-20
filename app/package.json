@@ -19,7 +19,7 @@
     "@ui-kitten/eva-icons": "^5.0.0",
     "jwt-decode": "^2.2.0",
     "react": "16.11.0",
-    "react-native": "0.62.2",
+    "react-native": "0.62.3",
     "react-native-svg": "^12.1.0",
     "react-router-native": "^5.2.0",
     "styled-components": "^5.1.0"
